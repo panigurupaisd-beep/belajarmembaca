@@ -1,0 +1,2849 @@
+<!DOCTYPE html>
+<html lang="id">
+<!-- Aku Bisa Membaca by @suhardyamir -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Aku Bisa Membaca 📖✨</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --yellow: #FFD93D;
+  --yellow-soft: #FFF3B0;
+  --blue: #4FC3F7;
+  --blue-deep: #2196F3;
+  --green: #66BB6A;
+  --green-soft: #C8E6C9;
+  --orange: #FF9800;
+  --orange-bright: #FFB74D;
+  --pink: #F48FB1;
+  --pink-soft: #FCE4EC;
+  --purple: #AB47BC;
+  --purple-soft: #F3E5F5;
+  --red: #EF5350;
+  --red-soft: #FFCDD2;
+  --bg-top: #87CEEB;
+  --bg-bottom: #FFF8E1;
+  --card: #FFFFFF;
+  --text: #2D3436;
+  --text-light: #636E72;
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-medium: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-strong: 0 12px 32px rgba(0,0,0,0.18);
+  --radius: 20px;
+  --radius-lg: 28px;
+  --btn-min: 56px;
+  --grad-sun: linear-gradient(135deg, #FFD93D 0%, #FF9800 100%);
+  --grad-sky: linear-gradient(135deg, #4FC3F7 0%, #2196F3 100%);
+  --grad-grass: linear-gradient(135deg, #66BB6A 0%, #43A047 100%);
+  --grad-pink: linear-gradient(135deg, #F48FB1 0%, #E91E63 100%);
+  --grad-purple: linear-gradient(135deg, #CE93D8 0%, #AB47BC 100%);
+  --grad-rainbow: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 25%, #6BCB77 50%, #4D96FF 75%, #9B59B6 100%);
+}
+html, body {
+  width: 100%; min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Nunito", "Comic Sans MS", sans-serif;
+  background: linear-gradient(180deg, var(--bg-top) 0%, #B3E5FC 30%, var(--bg-bottom) 100%);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  position: relative;
+}
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ===== FLOATING BACKGROUND DECORATIONS ===== */
+.bg-decor {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.bg-cloud {
+  position: absolute; background: rgba(255,255,255,0.7);
+  border-radius: 100px; filter: blur(2px);
+  animation: floatCloud 30s linear infinite;
+}
+.bg-cloud::before, .bg-cloud::after {
+  content: ''; position: absolute; background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+}
+.bg-cloud::before { width: 60%; height: 120%; top: -40%; left: 15%; }
+.bg-cloud::after { width: 40%; height: 100%; top: -30%; right: 15%; }
+.cloud-1 { width: 120px; height: 40px; top: 10%; left: -150px; animation-duration: 45s; }
+.cloud-2 { width: 80px; height: 28px; top: 25%; left: -100px; animation-duration: 60s; animation-delay: -20s; }
+.cloud-3 { width: 100px; height: 34px; top: 45%; left: -130px; animation-duration: 55s; animation-delay: -35s; }
+@keyframes floatCloud {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 200px)); }
+}
+.bg-star {
+  position: absolute; color: var(--yellow); font-size: 20px;
+  animation: twinkle 3s ease-in-out infinite;
+  opacity: 0.6;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+.bg-sun {
+  position: fixed; top: -40px; right: -40px;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, #FFF59D 0%, #FFD93D 50%, #FF9800 100%);
+  box-shadow: 0 0 80px rgba(255,217,61,0.6), 0 0 120px rgba(255,152,0,0.3);
+  animation: sunPulse 4s ease-in-out infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 80px rgba(255,217,61,0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(255,217,61,0.8); }
+}
+.bg-grass {
+  position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
+  background: linear-gradient(180deg, transparent 0%, #A5D6A7 40%, #66BB6A 100%);
+  pointer-events: none; z-index: 0;
+  border-top-left-radius: 50% 20px;
+  border-top-right-radius: 50% 20px;
+}
+
+/* ===== SCREENS ===== */
+.screen {
+  display: none; flex-direction: column; align-items: center;
+  width: 100%; min-height: 100vh; padding: 16px;
+  animation: screenEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative; z-index: 1;
+}
+.screen.active { display: flex; }
+@keyframes screenEnter {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== HEADER ===== */
+.app-header {
+  width: 100%; max-width: 800px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium), inset 0 2px 0 rgba(255,255,255,0.8);
+  margin-bottom: 16px; position: sticky; top: 8px; z-index: 100;
+  border: 3px solid rgba(255,255,255,0.6);
+}
+.app-header h1 {
+  font-size: 1.15rem; font-weight: 900;
+  background: var(--grad-rainbow);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+.header-btns { display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: var(--btn-min); height: var(--btn-min);
+  border: none; border-radius: 50%;
+  background: var(--grad-sun);
+  font-size: 1.5rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(255,152,0,0.3), inset 0 2px 0 rgba(255,255,255,0.4);
+  color: white; font-weight: bold;
+}
+.icon-btn:active { transform: scale(0.85) rotate(-10deg); }
+.icon-btn:hover { transform: scale(1.08); }
+
+/* ===== BUTTONS ===== */
+.btn {
+  min-height: var(--btn-min); padding: 14px 28px;
+  border: none; border-radius: 50px;
+  font-size: 1.05rem; font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.2);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  color: white; letter-spacing: 0.3px;
+  position: relative; overflow: hidden;
+}
+.btn::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+  border-radius: 50px 50px 0 0;
+  pointer-events: none;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.15); }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--grad-sky); }
+.btn-success { background: var(--grad-grass); }
+.btn-warning { background: var(--grad-sun); }
+.btn-danger { background: linear-gradient(135deg, #EF5350 0%, #C62828 100%); }
+.btn-purple { background: var(--grad-purple); }
+.btn-pink { background: var(--grad-pink); }
+
+/* ===== HOME SCREEN ===== */
+.home-title {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 900; text-align: center;
+  background: var(--grad-rainbow);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 12px 0 4px;
+  text-shadow: 0 4px 20px rgba(255,152,0,0.2);
+  letter-spacing: 1px;
+  animation: titleBounce 2s ease-in-out infinite;
+}
+@keyframes titleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.home-subtitle {
+  font-size: 1.1rem; color: var(--text);
+  margin-bottom: 20px; text-align: center;
+  background: rgba(255,255,255,0.7);
+  padding: 8px 20px; border-radius: 50px;
+  backdrop-filter: blur(10px);
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+}
+.home-mascot-wrap {
+  text-align: center; margin: 8px 0 16px;
+  position: relative;
+}
+.home-mascot-wrap svg {
+  width: 140px; height: 140px;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+  animation: mascotFloat 3s ease-in-out infinite;
+}
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+.mascot-sparkle {
+  position: absolute; font-size: 1.5rem;
+  animation: sparkleFloat 2s ease-in-out infinite;
+}
+.sparkle-1 { top: 10px; left: 20%; animation-delay: 0s; }
+.sparkle-2 { top: 30px; right: 20%; animation-delay: 0.7s; }
+.sparkle-3 { bottom: 20px; left: 30%; animation-delay: 1.4s; }
+@keyframes sparkleFloat {
+  0%, 100% { opacity: 0; transform: scale(0.5) translateY(0); }
+  50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
+}
+
+.level-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px; width: 100%; max-width: 640px; padding: 8px;
+}
+.level-card {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FAFAFA 100%);
+  border-radius: var(--radius-lg); padding: 20px 12px 16px;
+  text-align: center; cursor: pointer;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative; overflow: hidden;
+  border: 3px solid transparent;
+}
+.level-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+  background: var(--card-accent, var(--grad-sun));
+}
+.level-card:active { transform: scale(0.93) rotate(-2deg); }
+.level-card:hover:not(.locked) {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--shadow-strong);
+}
+.level-card.locked { opacity: 0.55; pointer-events: none; filter: grayscale(0.4); }
+.level-card .level-num {
+  font-size: 2.8rem; font-weight: 900;
+  display: block; margin-bottom: 4px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  animation: iconWiggle 3s ease-in-out infinite;
+}
+@keyframes iconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+.level-card .level-title {
+  font-size: 0.85rem; color: var(--text);
+  margin-top: 4px; font-weight: 700;
+  line-height: 1.3;
+}
+.level-card .level-stars {
+  margin-top: 8px; font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+.level-card .lock-icon {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 1.3rem;
+  animation: lockShake 2s ease-in-out infinite;
+}
+@keyframes lockShake {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-10deg); }
+}
+
+/* ===== MASCOT ===== */
+.mascot-container {
+  position: fixed; bottom: 16px; right: 16px; z-index: 200;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+.mascot-bubble {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: 20px 20px 4px 20px;
+  padding: 14px 18px; max-width: 240px;
+  font-size: 0.9rem; font-weight: 700;
+  box-shadow: var(--shadow-medium);
+  animation: bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  line-height: 1.5;
+  border: 2px solid rgba(255,217,61,0.5);
+  color: var(--text);
+  position: relative;
+}
+.mascot-bubble::after {
+  content: ''; position: absolute; bottom: -8px; right: 20px;
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #FFF9C4;
+}
+@keyframes bubblePop {
+  from { transform: scale(0) rotate(-10deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+.mascot-svg {
+  width: 80px; height: 80px; cursor: pointer;
+  animation: mascotBounce 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  transition: transform 0.2s;
+}
+.mascot-svg:active { transform: scale(0.9); }
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* ===== LEVEL CONTENT ===== */
+.level-content { width: 100%; max-width: 720px; }
+.level-header {
+  text-align: center; margin-bottom: 20px;
+  background: rgba(255,255,255,0.85);
+  padding: 16px 20px; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.6);
+}
+.level-header h2 {
+  font-size: 1.6rem;
+  background: var(--grad-purple);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+.level-header p { font-size: 0.95rem; color: var(--text-light); margin-top: 4px; font-weight: 600; }
+
+/* ===== FLASH CARDS ===== */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px; width: 100%; margin-bottom: 20px;
+}
+.flash-card {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius); padding: 16px 8px;
+  text-align: center; cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 3px solid rgba(255,217,61,0.3);
+  position: relative; overflow: hidden;
+}
+.flash-card::before {
+  content: ''; position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.flash-card:active {
+  transform: scale(0.88) rotate(-5deg);
+  box-shadow: var(--shadow-strong);
+}
+.flash-card:active::before { opacity: 1; }
+.flash-card:hover { transform: translateY(-4px) scale(1.03); }
+.flash-card.selected { border-color: var(--blue); background: linear-gradient(145deg, #E3F2FD 0%, #BBDEFB 100%); }
+.flash-card .card-letter {
+  font-size: 2.5rem; font-weight: 900;
+  background: var(--grad-sun);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(255,152,0,0.2);
+  line-height: 1;
+}
+.flash-card .card-word {
+  font-size: 0.8rem; color: var(--text);
+  margin-top: 6px; font-weight: 700;
+}
+.flash-card .card-emoji {
+  font-size: 2.2rem; display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  animation: emojiPop 0.5s ease-out;
+}
+@keyframes emojiPop {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ===== QUIZ ===== */
+.quiz-container { width: 100%; text-align: center; }
+.quiz-question {
+  font-size: 1.2rem; font-weight: 800; margin: 20px 0;
+  padding: 24px 20px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  border: 3px solid var(--yellow);
+  position: relative;
+}
+.quiz-question::before {
+  content: '🤔'; position: absolute; top: -20px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  background: white; border-radius: 50%;
+  width: 50px; height: 50px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-soft);
+}
+.quiz-options {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px; margin: 16px 0;
+}
+.quiz-option {
+  min-height: 70px; padding: 16px;
+  border: 3px solid #E0E0E0;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #FFFFFF 0%, #FAFAFA 100%);
+  font-size: 1.6rem; font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-soft);
+  color: var(--text);
+}
+.quiz-option:active { transform: scale(0.92); }
+.quiz-option:hover:not(.correct):not(.wrong) {
+  transform: translateY(-3px);
+  border-color: var(--blue);
+}
+.quiz-option.correct {
+  border-color: var(--green);
+  background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+  animation: correctPulse 0.6s ease;
+  color: #2E7D32;
+}
+@keyframes correctPulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15) rotate(-3deg); }
+  60% { transform: scale(0.95) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.quiz-option.wrong {
+  border-color: var(--red);
+  background: linear-gradient(135deg, #FFCDD2 0%, #EF9A9A 100%);
+  animation: wrongShake 0.5s ease;
+  color: #C62828;
+}
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px) rotate(-3deg); }
+  40% { transform: translateX(8px) rotate(3deg); }
+  60% { transform: translateX(-5px) rotate(-2deg); }
+  80% { transform: translateX(5px) rotate(2deg); }
+}
+
+/* ===== SYLLABLE MATRIX ===== */
+.matrix-table {
+  width: 100%; border-collapse: separate; border-spacing: 5px;
+  margin: 16px 0;
+  background: rgba(255,255,255,0.5);
+  padding: 8px; border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+}
+.matrix-table th, .matrix-table td {
+  padding: 14px 8px; text-align: center;
+  border-radius: 14px;
+  font-weight: 800; font-size: 1.1rem;
+}
+.matrix-table th {
+  background: var(--grad-purple); color: #fff;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.matrix-table td {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF9C4 100%);
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--text);
+}
+.matrix-table td:active {
+  transform: translateY(2px) scale(0.9);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+.matrix-table td:hover { transform: translateY(-2px) scale(1.05); }
+.matrix-table td.highlight {
+  background: var(--grad-sun);
+  color: white;
+  animation: cellPop 0.5s ease;
+  box-shadow: 0 0 20px rgba(255,217,61,0.6);
+}
+@keyframes cellPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ===== WRITING STUDIO ===== */
+.writing-studio { width: 100%; max-width: 700px; }
+.canvas-container {
+  position: relative; width: 100%;
+  margin: 16px auto; border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-strong), inset 0 0 0 4px rgba(255,255,255,0.5);
+  background: #fff;
+  border: 4px solid var(--yellow);
+}
+#writingCanvas {
+  width: 100%; height: 300px; display: block;
+  touch-action: none; cursor: crosshair;
+  background: linear-gradient(180deg, #FFFDE7 0%, #FFFFFF 100%);
+}
+.canvas-guide {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.brush-tools {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  margin: 14px 0;
+}
+.brush-color {
+  width: 50px; height: 50px; border-radius: 50%;
+  border: 4px solid #FFF;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.brush-color:active { transform: scale(0.85); }
+.brush-color.active {
+  transform: scale(1.2);
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px var(--yellow), 0 4px 12px rgba(0,0,0,0.3);
+}
+.writing-controls {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin: 14px 0;
+}
+.stroke-guide {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E1F5FE 100%);
+  border-radius: var(--radius); padding: 18px;
+  margin: 14px 0;
+  box-shadow: var(--shadow-soft);
+  font-size: 0.95rem; line-height: 1.7;
+  border-left: 6px solid var(--blue);
+  font-weight: 600;
+}
+.stroke-guide strong {
+  color: var(--blue-deep);
+  font-size: 1.05rem;
+}
+.score-display {
+  text-align: center; padding: 28px 20px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  margin: 16px 0;
+  border: 3px solid var(--yellow);
+  animation: scoreReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes scoreReveal {
+  from { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+.score-circle {
+  width: 130px; height: 130px; border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; font-weight: 900; color: #fff;
+  animation: scoreGlow 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 0 30px rgba(255,215,0,0.4);
+  border: 4px solid rgba(255,255,255,0.5);
+}
+@keyframes scoreGlow {
+  from { box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 0 20px rgba(255,215,0,0.3); transform: scale(1); }
+  to { box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 0 50px rgba(255,215,0,0.8); transform: scale(1.05); }
+}
+.score-stars { font-size: 2.2rem; margin: 10px 0; letter-spacing: 4px; }
+.score-message {
+  font-size: 1.15rem; font-weight: 800; margin: 10px 0;
+  color: var(--text);
+}
+
+/* ===== BLENDING ANIMATION ===== */
+.blend-container {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin: 24px 0; font-size: 2.5rem; font-weight: 900;
+  flex-wrap: wrap;
+}
+.blend-letter {
+  padding: 18px 26px;
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-medium);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--purple);
+  border: 3px solid var(--yellow);
+}
+.blend-plus {
+  color: var(--orange); font-size: 2rem;
+  animation: plusPulse 1.5s ease-in-out infinite;
+}
+@keyframes plusPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3) rotate(180deg); }
+}
+.blend-result {
+  padding: 18px 26px;
+  background: var(--grad-sun);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-medium);
+  opacity: 0; transform: scale(0.3) rotate(-20deg);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.blend-result.show {
+  opacity: 1; transform: scale(1) rotate(0);
+  animation: resultCelebrate 0.8s ease;
+}
+@keyframes resultCelebrate {
+  0% { transform: scale(0.3) rotate(-20deg); }
+  50% { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ===== WORD GAME ===== */
+.word-display {
+  font-size: 2rem; font-weight: 900; text-align: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #E1F5FE 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  margin: 16px 0; letter-spacing: 4px;
+  border: 3px solid var(--blue);
+}
+.word-syllables { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.syllable-block {
+  padding: 14px 22px;
+  background: var(--grad-sky); color: #fff;
+  border-radius: 16px;
+  font-size: 1.8rem; font-weight: 900;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 6px 12px rgba(33,150,243,0.3);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  animation: syllableDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes syllableDrop {
+  from { transform: translateY(-30px) rotate(-10deg); opacity: 0; }
+  to { transform: translateY(0) rotate(0); opacity: 1; }
+}
+.word-image {
+  font-size: 5rem; text-align: center; margin: 16px 0;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+  animation: imageBounce 2s ease-in-out infinite;
+}
+@keyframes imageBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+
+/* ===== PUZZLE GAME ===== */
+.puzzle-area {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  margin: 16px 0; min-height: 80px; padding: 18px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F3E5F5 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  border: 3px dashed var(--purple);
+}
+.puzzle-piece {
+  padding: 14px 22px;
+  background: var(--grad-grass); color: #fff;
+  border-radius: 16px;
+  font-size: 1.3rem; font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 6px 12px rgba(76,175,80,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.puzzle-piece:active { transform: scale(0.9); }
+.puzzle-piece:hover:not(.placed) { transform: translateY(-3px) rotate(-3deg); }
+.puzzle-piece.placed { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+.puzzle-slots {
+  display: flex; gap: 10px; justify-content: center; margin: 16px 0;
+  flex-wrap: wrap;
+}
+.puzzle-slot {
+  min-width: 80px; min-height: 60px;
+  border: 4px dashed #CCC;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 800; padding: 12px;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.3s;
+  color: var(--text);
+}
+.puzzle-slot.filled {
+  border-style: solid;
+  border-color: var(--green);
+  background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+  animation: slotFill 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #2E7D32;
+}
+@keyframes slotFill {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+/* ===== KARAOKE ===== */
+.karaoke-text {
+  font-size: 1.4rem; line-height: 2.8; padding: 24px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  margin: 16px 0; text-align: center;
+  border: 3px solid var(--yellow);
+}
+.karaoke-word {
+  display: inline-block; padding: 6px 10px;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-weight: 700;
+}
+.karaoke-word.active {
+  background: var(--grad-sun); color: white;
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(255,152,0,0.4);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.karaoke-word.done { color: var(--green); }
+
+/* ===== SETTINGS MODAL ===== */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1000; align-items: center; justify-content: center;
+  padding: 16px;
+  animation: modalFade 0.3s ease;
+}
+@keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+.modal-overlay.active { display: flex; }
+.modal-content {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg); padding: 28px;
+  width: 100%; max-width: 520px; max-height: 85vh; overflow-y: auto;
+  box-shadow: var(--shadow-strong);
+  border: 3px solid var(--yellow);
+  animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes modalPop {
+  from { transform: scale(0.7) rotate(-5deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+.modal-content h2 {
+  margin-bottom: 16px;
+  background: var(--grad-purple);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+.modal-content h3 {
+  color: var(--purple); margin: 16px 0 8px;
+  font-weight: 800;
+}
+.badge-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px; margin: 16px 0;
+}
+.badge-item {
+  text-align: center; padding: 18px 8px;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #F5F5F5 0%, #E0E0E0 100%);
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+.badge-item.earned {
+  background: linear-gradient(145deg, #FFF9C4 0%, #FFD93D 100%);
+  box-shadow: 0 4px 12px rgba(255,217,61,0.4), inset 0 2px 0 rgba(255,255,255,0.5);
+  border-color: var(--orange);
+  animation: badgeEarned 0.6s ease;
+}
+@keyframes badgeEarned {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.badge-item .badge-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.badge-item .badge-name {
+  font-size: 0.75rem; margin-top: 6px;
+  color: var(--text); font-weight: 700;
+}
+.badge-item.locked { opacity: 0.4; filter: grayscale(1); }
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999;
+}
+.confetti-piece {
+  position: absolute; top: -20px;
+  animation: confettiFall 3s ease-in forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  width: 100%; height: 16px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px; overflow: hidden;
+  margin: 12px 0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green) 0%, var(--blue) 50%, var(--purple) 100%);
+  border-radius: 10px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px rgba(102,187,106,0.5);
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* ===== SPECIAL PATTERNS (Level 4) ===== */
+.ng-highlight {
+  color: var(--orange); font-weight: 900;
+  text-shadow: 0 1px 2px rgba(255,152,0,0.3);
+}
+.vowel-highlight {
+  color: var(--blue-deep); font-weight: 900;
+  text-shadow: 0 1px 2px rgba(33,150,243,0.3);
+}
+.cluster-highlight {
+  color: var(--purple); font-weight: 900;
+  text-shadow: 0 1px 2px rgba(171,71,188,0.3);
+}
+
+/* ===== FOOTER ===== */
+.app-footer {
+  text-align: center; padding: 20px;
+  margin-top: auto;
+  font-size: 9px; opacity: 0.35;
+  color: var(--text-light);
+  position: relative; z-index: 1;
+}
+
+/* ===== TAB NAVIGATION ===== */
+.tab-nav {
+  display: flex; gap: 8px; margin-bottom: 16px;
+  flex-wrap: wrap; justify-content: center;
+  background: rgba(255,255,255,0.6);
+  padding: 8px; border-radius: 50px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-soft);
+}
+.tab-btn {
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  background: transparent;
+  font-size: 0.9rem; font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--text);
+}
+.tab-btn.active {
+  background: var(--grad-purple);
+  color: #fff;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15), 0 4px 10px rgba(171,71,188,0.3);
+  transform: scale(1.05);
+}
+.tab-btn:active { transform: scale(0.95); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .home-title { font-size: 2rem; }
+  .level-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .card-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .blend-container { font-size: 1.8rem; gap: 8px; }
+  .blend-letter, .blend-result { padding: 12px 18px; }
+  .matrix-table th, .matrix-table td { padding: 10px 4px; font-size: 0.95rem; }
+  .mascot-container { bottom: 8px; right: 8px; }
+  .mascot-bubble { max-width: 180px; font-size: 0.8rem; }
+  .mascot-svg { width: 65px; height: 65px; }
+  .home-mascot-wrap svg { width: 110px; height: 110px; }
+  .app-header h1 { font-size: 1rem; }
+  .bg-sun { width: 120px; height: 120px; top: -30px; right: -30px; }
+  .level-card .level-num { font-size: 2.2rem; }
+}
+@media (max-width: 360px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .level-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== CATEGORY SELECT ===== */
+.category-select {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin: 12px 0;
+  background: rgba(255,255,255,0.6);
+  padding: 8px; border-radius: 50px;
+  backdrop-filter: blur(10px);
+}
+.cat-btn {
+  padding: 10px 16px;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  background: transparent;
+  font-size: 0.85rem; font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--text);
+}
+.cat-btn.active {
+  background: var(--grad-sun);
+  color: white;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  transform: scale(1.05);
+}
+
+/* ===== STORY CARD ===== */
+.story-card {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFF9C4 100%);
+  border-radius: var(--radius-lg); padding: 22px;
+  box-shadow: var(--shadow-medium);
+  margin: 16px 0; width: 100%;
+  border: 3px solid var(--yellow);
+}
+.story-card h3 {
+  background: var(--grad-purple);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  font-weight: 900;
+  font-size: 1.3rem;
+}
+
+/* ===== STAR COUNTER ===== */
+.star-counter {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 1.05rem; font-weight: 900;
+  background: linear-gradient(135deg, #FFF9C4 0%, #FFD93D 100%);
+  padding: 6px 14px; border-radius: 50px;
+  color: var(--text);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(255,152,0,0.2);
+  border: 2px solid rgba(255,255,255,0.6);
+}
+
+/* ===== RIPPLE EFFECT ===== */
+.ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  transform: scale(0);
+  animation: rippleEffect 0.6s ease-out;
+  pointer-events: none;
+}
+@keyframes rippleEffect {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ===== LOADING DOTS ===== */
+.loading-dots { display: inline-flex; gap: 4px; }
+.loading-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange);
+  animation: dotBounce 1.4s ease-in-out infinite;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ===== RAINBOW DIVIDER ===== */
+.rainbow-divider {
+  height: 4px; width: 100%;
+  background: var(--grad-rainbow);
+  border-radius: 2px;
+  margin: 12px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--grad-sun); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ===== BACKGROUND DECORATIONS ===== -->
+<div class="bg-decor">
+  <div class="bg-cloud cloud-1"></div>
+  <div class="bg-cloud cloud-2"></div>
+  <div class="bg-cloud cloud-3"></div>
+  <div class="bg-star" style="top:15%;left:10%;">✨</div>
+  <div class="bg-star" style="top:30%;left:80%;animation-delay:1s;">⭐</div>
+  <div class="bg-star" style="top:50%;left:20%;animation-delay:2s;">✨</div>
+  <div class="bg-star" style="top:65%;left:70%;animation-delay:0.5s;">⭐</div>
+  <div class="bg-star" style="top:80%;left:40%;animation-delay:1.5s;">✨</div>
+</div>
+<div class="bg-sun"></div>
+<div class="bg-grass"></div>
+
+<!-- ===== HOME SCREEN ===== -->
+<div id="screenHome" class="screen active">
+  <div class="app-header">
+    <h1>📖 Aku Bisa Membaca</h1>
+    <div class="header-btns">
+      <div class="star-counter">⭐ <span id="totalStars">0</span></div>
+      <button class="icon-btn" id="btnBadges" title="Lencana">🏅</button>
+      <button class="icon-btn" id="btnSettings" title="Pengaturan">⚙️</button>
+    </div>
+  </div>
+  <div class="home-mascot-wrap">
+    <span class="mascot-sparkle sparkle-1">✨</span>
+    <span class="mascot-sparkle sparkle-2">⭐</span>
+    <span class="mascot-sparkle sparkle-3">✨</span>
+    <svg viewBox="0 0 100 100">
+      <defs>
+        <radialGradient id="bodyGrad" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#E6A56C"/>
+          <stop offset="100%" stop-color="#B8733E"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="50" cy="62" rx="26" ry="30" fill="url(#bodyGrad)"/>
+      <circle cx="50" cy="35" r="21" fill="url(#bodyGrad)"/>
+      <circle cx="42" cy="32" r="5" fill="#fff"/>
+      <circle cx="42" cy="32" r="2.5" fill="#2D3436"/>
+      <circle cx="43" cy="31" r="0.8" fill="#fff"/>
+      <circle cx="58" cy="32" r="5" fill="#fff"/>
+      <circle cx="58" cy="32" r="2.5" fill="#2D3436"/>
+      <circle cx="59" cy="31" r="0.8" fill="#fff"/>
+      <ellipse cx="50" cy="41" rx="3.5" ry="2.5" fill="#FF69B4"/>
+      <path d="M43 45 Q50 50 57 45" stroke="#2D3436" fill="none" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="38" cy="40" r="2.5" fill="#FFB6C1" opacity="0.7"/>
+      <circle cx="62" cy="40" r="2.5" fill="#FFB6C1" opacity="0.7"/>
+      <ellipse cx="34" cy="18" rx="7" ry="13" fill="url(#bodyGrad)" transform="rotate(-15,34,18)"/>
+      <ellipse cx="66" cy="18" rx="7" ry="13" fill="url(#bodyGrad)" transform="rotate(15,66,18)"/>
+      <ellipse cx="34" cy="18" rx="3.5" ry="9" fill="#FFB6C1" transform="rotate(-15,34,18)"/>
+      <ellipse cx="66" cy="18" rx="3.5" ry="9" fill="#FFB6C1" transform="rotate(15,66,18)"/>
+    </svg>
+  </div>
+  <h1 class="home-title">AKU BISA MEMBACA!</h1>
+  <p class="home-subtitle">🦌 Ayo belajar membaca bersama Kiki! 📚✨</p>
+  <div class="rainbow-divider"></div>
+  <div class="level-grid" id="levelGrid"></div>
+  <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+    <button class="btn btn-pink" id="btnWritingStudio">✍️ Studio Menulis</button>
+  </div>
+</div>
+
+<!-- ===== LEVEL SCREEN ===== -->
+<div id="screenLevel" class="screen">
+  <div class="app-header">
+    <button class="icon-btn" id="btnBackHome">🏠</button>
+    <h1 id="levelTitle">Level 1</h1>
+    <div class="header-btns">
+      <div class="star-counter">⭐ <span id="levelStars">0</span></div>
+    </div>
+  </div>
+  <div class="level-content" id="levelContent"></div>
+</div>
+
+<!-- ===== WRITING STUDIO SCREEN ===== -->
+<div id="screenWriting" class="screen">
+  <div class="app-header">
+    <button class="icon-btn" id="btnBackFromWriting">🏠</button>
+    <h1>✍️ Studio Menulis</h1>
+    <div class="header-btns"></div>
+  </div>
+  <div class="writing-studio">
+    <div class="category-select" id="writingCategory">
+      <button class="cat-btn active" data-cat="vowel">🔤 Vokal</button>
+      <button class="cat-btn" data-cat="consonant">🔡 Konsonan</button>
+      <button class="cat-btn" data-cat="syllable">📝 Suku Kata</button>
+      <button class="cat-btn" data-cat="word">📚 Kata</button>
+    </div>
+    <div id="writingTarget" style="text-align:center;font-size:4rem;font-weight:900;margin:8px 0;background:var(--grad-sun);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 4px 8px rgba(255,152,0,0.3));">A</div>
+    <div class="stroke-guide" id="strokeGuide">
+      <strong>📝 Panduan Menulis:</strong><br>
+      <span id="strokeInstructions">Tekan tombol suara untuk mendengar panduan.</span>
+    </div>
+    <div class="canvas-container">
+      <canvas id="writingCanvas"></canvas>
+      <canvas class="canvas-guide" id="guideCanvas"></canvas>
+    </div>
+    <div class="brush-tools" id="brushTools">
+      <div class="brush-color active" style="background:#EF5350" data-color="#EF5350"></div>
+      <div class="brush-color" style="background:#4FC3F7" data-color="#4FC3F7"></div>
+      <div class="brush-color" style="background:#66BB6A" data-color="#66BB6A"></div>
+      <div class="brush-color" style="background:#AB47BC" data-color="#AB47BC"></div>
+      <div class="brush-color" style="background:#FF9800" data-color="#FF9800"></div>
+      <div class="brush-color" style="background:#FFF;border-color:#999;" data-color="eraser">🧹</div>
+    </div>
+    <div class="writing-controls">
+      <button class="btn btn-warning" id="btnClearCanvas">🗑️ Hapus</button>
+      <button class="btn btn-success" id="btnCheckWriting">✅ Cek Tulisan</button>
+      <button class="btn btn-primary" id="btnVoiceGuide">🔊 Panduan</button>
+      <button class="btn btn-purple" id="btnNextLetter">➡️ Berikutnya</button>
+    </div>
+    <div id="writingScore" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ===== SETTINGS MODAL ===== -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal-content">
+    <h2>⚙️ Pengaturan & Prestasi</h2>
+    <div style="margin:16px 0;">
+      <button class="btn btn-primary" id="btnTestVoice" style="width:100%;margin-bottom:12px;">🔊 Uji Suara Bahasa Indonesia</button>
+      <button class="btn btn-danger" id="btnResetProgress" style="width:100%;margin-bottom:12px;">🔄 Reset Semua Progres</button>
+      <button class="btn btn-warning" id="btnCloseSettings" style="width:100%;">✖️ Tutup</button>
+    </div>
+    <div style="margin-top:16px;">
+      <h3>🏅 Koleksi Lencana</h3>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </div>
+    <div style="margin-top:16px;">
+      <h3>📊 Riwayat Menulis</h3>
+      <div id="writingHistory" style="font-size:0.85rem;color:var(--text-light);"></div>
+    </div>
+    <p style="font-size:9px;opacity:0.35;text-align:center;margin-top:16px;">© Aku Bisa Membaca • @suhardyamir</p>
+  </div>
+</div>
+
+<!-- ===== MASCOT ===== -->
+<div class="mascot-container" id="mascotContainer">
+  <div class="mascot-bubble" id="mascotBubble" style="display:none;"></div>
+  <svg class="mascot-svg" id="mascotSvg" viewBox="0 0 100 100">
+    <defs>
+      <radialGradient id="bodyGrad2" cx="50%" cy="40%">
+        <stop offset="0%" stop-color="#E6A56C"/>
+        <stop offset="100%" stop-color="#B8733E"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="50" cy="62" rx="26" ry="30" fill="url(#bodyGrad2)"/>
+    <circle cx="50" cy="35" r="21" fill="url(#bodyGrad2)"/>
+    <circle cx="42" cy="32" r="5" fill="#fff"/>
+    <circle cx="42" cy="32" r="2.5" fill="#2D3436"/>
+    <circle cx="43" cy="31" r="0.8" fill="#fff"/>
+    <circle cx="58" cy="32" r="5" fill="#fff"/>
+    <circle cx="58" cy="32" r="2.5" fill="#2D3436"/>
+    <circle cx="59" cy="31" r="0.8" fill="#fff"/>
+    <ellipse cx="50" cy="41" rx="3.5" ry="2.5" fill="#FF69B4"/>
+    <path d="M43 45 Q50 50 57 45" stroke="#2D3436" fill="none" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="38" cy="40" r="2.5" fill="#FFB6C1" opacity="0.7"/>
+    <circle cx="62" cy="40" r="2.5" fill="#FFB6C1" opacity="0.7"/>
+    <ellipse cx="34" cy="18" rx="7" ry="13" fill="url(#bodyGrad2)" transform="rotate(-15,34,18)"/>
+    <ellipse cx="66" cy="18" rx="7" ry="13" fill="url(#bodyGrad2)" transform="rotate(15,66,18)"/>
+    <ellipse cx="34" cy="18" rx="3.5" ry="9" fill="#FFB6C1" transform="rotate(-15,34,18)"/>
+    <ellipse cx="66" cy="18" rx="3.5" ry="9" fill="#FFB6C1" transform="rotate(15,66,18)"/>
+  </svg>
+</div>
+
+<!-- ===== CONFETTI ===== -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="app-footer">© Aku Bisa Membaca • @suhardyamir</footer>
+
+<script>
+// ===== Aku Bisa Membaca by @suhardyamir =====
+console.log("%c Aku Bisa Membaca by @suhardyamir ", "background: #222; color: #bada55; font-size: 11px;");
+
+// ===== UTILITY: Null-safe element getter =====
+function $(id) { return document.getElementById(id) || null; }
+function $$(sel) { return document.querySelectorAll(sel); }
+
+// ===== APP STATE =====
+const APP = {
+  currentLevel: 0,
+  currentScreen: 'home',
+  totalStars: 0,
+  levelStars: [0,0,0,0,0,0,0],
+  badges: {},
+  writingHistory: [],
+  writingCategory: 'vowel',
+  writingIndex: 0,
+  quizIndex: 0,
+  quizScore: 0,
+  quizTotal: 0,
+  isDrawing: false,
+  brushColor: '#EF5350',
+  isEraser: false,
+  drawPoints: [],
+  audioCtx: null,
+  voices: [],
+  idVoice: null
+};
+
+// ===== LOCAL STORAGE =====
+function saveProgress() {
+  try {
+    localStorage.setItem('akubisamembaca', JSON.stringify({
+      totalStars: APP.totalStars,
+      levelStars: APP.levelStars,
+      badges: APP.badges,
+      writingHistory: APP.writingHistory
+    }));
+  } catch(e) {}
+}
+function loadProgress() {
+  try {
+    const d = JSON.parse(localStorage.getItem('akubisamembaca'));
+    if (d) {
+      APP.totalStars = d.totalStars || 0;
+      APP.levelStars = d.levelStars || [0,0,0,0,0,0,0];
+      APP.badges = d.badges || {};
+      APP.writingHistory = d.writingHistory || [];
+    }
+  } catch(e) {}
+}
+function resetProgress() {
+  APP.totalStars = 0;
+  APP.levelStars = [0,0,0,0,0,0,0];
+  APP.badges = {};
+  APP.writingHistory = [];
+  saveProgress();
+  updateUI();
+  mascotSay("Progres sudah direset! Ayo belajar lagi!");
+}
+
+// ===== AUDIO SYNTHESIZER =====
+function getAudioCtx() {
+  if (!APP.audioCtx) {
+    APP.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (APP.audioCtx.state === 'suspended') APP.audioCtx.resume();
+  return APP.audioCtx;
+}
+function playPop() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.15);
+  } catch(e) {}
+}
+function playSuccess() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
+      gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + i * 0.12 + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.4);
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.4);
+    });
+  } catch(e) {}
+}
+function playTryAgain() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 220;
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.4);
+  } catch(e) {}
+}
+function playSparkle() {
+  try {
+    const ctx = getAudioCtx();
+    for (let i = 0; i < 8; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = 1500 + Math.random() * 2500;
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.06);
+      gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + i * 0.06 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.06 + 0.2);
+      osc.start(ctx.currentTime + i * 0.06);
+      osc.stop(ctx.currentTime + i * 0.06 + 0.2);
+    }
+  } catch(e) {}
+}
+
+// ===== SPEECH SYNTHESIS =====
+const PHONETIC_MAP = {
+  'A':'a','I':'i','U':'u','E':'e','O':'o',
+  'B':'be','C':'ce','D':'de','F':'ef','G':'ge',
+  'H':'ha','J':'je','K':'ka','L':'el','M':'em',
+  'N':'en','P':'pe','Q':'ki','R':'er','S':'es',
+  'T':'te','V':'fe','W':'we','X':'eks','Y':'ye','Z':'zet'
+};
+
+function initVoices() {
+  if (!window.speechSynthesis) return;
+  APP.voices = window.speechSynthesis.getVoices();
+  APP.idVoice = APP.voices.find(v => v.lang && (v.lang.includes('id') || v.lang.includes('ID'))) || null;
+}
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = initVoices;
+  initVoices();
+}
+
+function speak(text, opts = {}) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'id-ID';
+  if (APP.idVoice) u.voice = APP.idVoice;
+  u.rate = opts.rate || 0.85;
+  u.pitch = opts.pitch || 1.1;
+  u.volume = opts.volume || 1;
+  window.speechSynthesis.speak(u);
+}
+
+function speakLetter(letter) {
+  const upper = letter.toUpperCase();
+  const mapped = PHONETIC_MAP[upper] || letter.toLowerCase();
+  speak(mapped);
+}
+
+function speakSyllable(syllable) {
+  speak(syllable.toLowerCase());
+}
+
+function speakBlending(consonant, vowel, result) {
+  const cSound = PHONETIC_MAP[consonant.toUpperCase()] || consonant.toLowerCase();
+  const vSound = vowel.toLowerCase();
+  const rSound = result.toLowerCase();
+  speak(cSound, { rate: 0.8 });
+  setTimeout(() => speak(vSound, { rate: 0.8 }), 800);
+  setTimeout(() => speak("menjadi... " + rSound, { rate: 0.8 }), 1600);
+}
+
+// ===== MASCOT =====
+let mascotTimeout = null;
+function mascotSay(text, duration = 4000) {
+  const bubble = $('mascotBubble');
+  if (!bubble) return;
+  bubble.textContent = text;
+  bubble.style.display = 'block';
+  bubble.style.animation = 'none';
+  setTimeout(() => bubble.style.animation = 'bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)', 10);
+  if (mascotTimeout) clearTimeout(mascotTimeout);
+  mascotTimeout = setTimeout(() => { bubble.style.display = 'none'; }, duration);
+}
+
+// ===== CONFETTI =====
+function showConfetti() {
+  const container = $('confettiContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  const colors = ['#FFD93D','#4FC3F7','#66BB6A','#FF9800','#F48FB1','#AB47BC','#EF5350'];
+  const shapes = ['circle', 'square', 'star'];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    const size = 8 + Math.random() * 10;
+    piece.style.width = size + 'px';
+    piece.style.height = size + 'px';
+    piece.style.background = color;
+    piece.style.animationDelay = Math.random() * 1 + 's';
+    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+    if (shape === 'circle') piece.style.borderRadius = '50%';
+    else if (shape === 'star') {
+      piece.style.background = 'transparent';
+      piece.style.innerHTML = '';
+      piece.textContent = '⭐';
+      piece.style.fontSize = size + 'px';
+      piece.style.width = 'auto';
+      piece.style.height = 'auto';
+    }
+    container.appendChild(piece);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 4000);
+}
+
+// ===== NAVIGATION =====
+function showScreen(name) {
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  const screen = $('screen' + name.charAt(0).toUpperCase() + name.slice(1));
+  if (screen) screen.classList.add('active');
+  APP.currentScreen = name;
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  showScreen('home');
+  updateUI();
+  mascotSay("Pilih level yang ingin kamu mainkan!");
+}
+
+// ===== LEVEL DATA =====
+const LEVELS = [
+  { num: 1, title: "Mengenal Huruf", icon: "🔤", color: "#FFD93D", grad: "var(--grad-sun)" },
+  { num: 2, title: "Suku Kata Vokal A", icon: "🅰️", color: "#4FC3F7", grad: "var(--grad-sky)" },
+  { num: 3, title: "Matriks Suku Kata", icon: "📊", color: "#66BB6A", grad: "var(--grad-grass)" },
+  { num: 4, title: "Pola Khusus", icon: "🌟", color: "#FF9800", grad: "var(--grad-sun)" },
+  { num: 5, title: "Kata Sederhana", icon: "📝", color: "#AB47BC", grad: "var(--grad-purple)" },
+  { num: 6, title: "Kata Kompleks", icon: "📚", color: "#F48FB1", grad: "var(--grad-pink)" },
+  { num: 7, title: "Kalimat & Cerita", icon: "📖", color: "#EF5350", grad: "linear-gradient(135deg,#EF5350,#C62828)" }
+];
+
+const VOWELS = ['A','I','U','E','O'];
+const CONSONANTS = ['B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'];
+const LETTER_WORDS = {
+  'A':['Apel','🍎'],'B':['Bola','⚽'],'C':['Ceri','🍒'],'D':['Dadu','🎲'],
+  'E':['Elang','🦅'],'F':['Flamingo','🦩'],'G':['Gajah','🐘'],'H':['Harimau','🐯'],
+  'I':['Ikan','🐟'],'J':['Jeruk','🍊'],'K':['Kucing','🐱'],'L':['Lebah','🐝'],
+  'M':['Monyet','🐵'],'N':['Nanas','🍍'],'O':['Onta','🐫'],'P':['Panda','🐼'],
+  'Q':['Queen','👑'],'R':['Rubah','🦊'],'S':['Semut','🐜'],'T':['Tikus','🐭'],
+  'U':['Ular','🐍'],'V':['Violin','🎻'],'W':['Wortel','🥕'],'X':['Xylophone','🎹'],
+  'Y':['Yoyo','🪀'],'Z':['Zebra','🦓']
+};
+
+const SYLLABLES_A = ['BA','CA','DA','FA','GA','HA','JA','KA','LA','MA','NA','PA','RA','SA','TA','WA','YA'];
+const MATRIX_CONSONANTS = ['B','C','D','M','P','S','T','N','L','R'];
+const MATRIX_VOWELS = ['A','I','U','E','O'];
+
+// ===== LEVEL 1: Mengenal Huruf =====
+function renderLevel1() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>🔤 Level 1: Mengenal Huruf</h2><p>Sentuh huruf untuk mendengar bunyinya! 🎵</p></div>`;
+  html += `<div class="tab-nav"><button class="tab-btn active" data-tab="vowels">🌈 Vokal</button><button class="tab-btn" data-tab="consonants">🔡 Konsonan</button><button class="tab-btn" data-tab="quiz1">🎯 Kuis</button></div>`;
+  html += `<div id="l1Vowels" class="card-grid">`;
+  VOWELS.forEach(v => {
+    const w = LETTER_WORDS[v];
+    html += `<div class="flash-card" data-letter="${v}"><div class="card-letter">${v}</div><div class="card-emoji">${w[1]}</div><div class="card-word">${w[0]}</div></div>`;
+  });
+  html += `</div>`;
+  html += `<div id="l1Consonants" class="card-grid" style="display:none;">`;
+  CONSONANTS.forEach(c => {
+    const w = LETTER_WORDS[c];
+    html += `<div class="flash-card" data-letter="${c}"><div class="card-letter">${c}</div><div class="card-emoji">${w[1]}</div><div class="card-word">${w[0]}</div></div>`;
+  });
+  html += `</div>`;
+  html += `<div id="l1Quiz" class="quiz-container" style="display:none;"></div>`;
+  content.innerHTML = html;
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      const vw = $('l1Vowels'); const cw = $('l1Consonants'); const qz = $('l1Quiz');
+      if (vw) vw.style.display = tab === 'vowels' ? 'grid' : 'none';
+      if (cw) cw.style.display = tab === 'consonants' ? 'grid' : 'none';
+      if (qz) qz.style.display = tab === 'quiz1' ? 'block' : 'none';
+      if (tab === 'quiz1') startQuiz1();
+      playPop();
+    });
+  });
+
+  content.querySelectorAll('.flash-card').forEach(card => {
+    card.addEventListener('click', () => {
+      playPop();
+      card.style.animation = 'none';
+      setTimeout(() => {
+        card.style.animation = 'correctPulse 0.5s ease';
+      }, 10);
+      const letter = card.dataset.letter;
+      speakLetter(letter);
+      mascotSay(`Ini huruf ${letter}! Bunyinya "${PHONETIC_MAP[letter]}"`);
+    });
+  });
+}
+
+function startQuiz1() {
+  const container = $('l1Quiz');
+  if (!container) return;
+  APP.quizIndex = 0; APP.quizScore = 0; APP.quizTotal = 5;
+  nextQuiz1Question();
+}
+
+function nextQuiz1Question() {
+  const container = $('l1Quiz');
+  if (!container) return;
+  if (APP.quizIndex >= APP.quizTotal) {
+    finishQuiz1();
+    return;
+  }
+  const allLetters = [...VOWELS, ...CONSONANTS];
+  const target = allLetters[Math.floor(Math.random() * allLetters.length)];
+  let options = [target];
+  while (options.length < 3) {
+    const r = allLetters[Math.floor(Math.random() * allLetters.length)];
+    if (!options.includes(r)) options.push(r);
+  }
+  options.sort(() => Math.random() - 0.5);
+
+  let html = `<div class="quiz-question">🔊 Tunjukkan huruf <strong style="font-size:1.6rem;background:var(--grad-sun);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">"${PHONETIC_MAP[target].toUpperCase()}"</strong></div>`;
+  html += `<div class="quiz-options">`;
+  options.forEach(o => {
+    html += `<button class="quiz-option" data-answer="${o}">${o}</button>`;
+  });
+  html += `</div>`;
+  html += `<p style="margin-top:12px;color:var(--text-light);font-weight:700;background:rgba(255,255,255,0.6);padding:6px 16px;border-radius:50px;display:inline-block;">📝 Soal ${APP.quizIndex + 1} dari ${APP.quizTotal}</p>`;
+  container.innerHTML = html;
+
+  speak(`Tunjukkan huruf ${PHONETIC_MAP[target]}`);
+
+  container.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.dataset.answer;
+      container.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+      if (answer === target) {
+        btn.classList.add('correct');
+        playSuccess();
+        APP.quizScore++;
+        mascotSay("Benar! Hebat! 🎉");
+      } else {
+        btn.classList.add('wrong');
+        playTryAgain();
+        const correctBtn = container.querySelector(`[data-answer="${target}"]`);
+        if (correctBtn) correctBtn.classList.add('correct');
+        mascotSay(`Yang benar adalah huruf ${target}!`);
+      }
+      APP.quizIndex++;
+      setTimeout(() => nextQuiz1Question(), 1500);
+    });
+  });
+}
+
+function finishQuiz1() {
+  const container = $('l1Quiz');
+  if (!container) return;
+  const stars = APP.quizScore >= 5 ? 3 : APP.quizScore >= 3 ? 2 : 1;
+  awardStars(1, stars);
+  let html = `<div class="score-display">
+    <div class="score-circle" style="background:${stars===3?'var(--grad-grass)':stars===2?'var(--grad-sky)':'var(--grad-sun)'};">${APP.quizScore}/${APP.quizTotal}</div>
+    <div class="score-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+    <div class="score-message">${stars===3?'🎉 Luar Biasa! 🎉':stars===2?'👏 Bagus Sekali!':'💪 Ayo Coba Lagi!'}</div>
+    <button class="btn btn-primary" onclick="startQuiz1()">🔄 Ulangi Kuis</button>
+  </div>`;
+  container.innerHTML = html;
+  if (stars >= 2) { showConfetti(); playSparkle(); }
+  mascotSay(stars === 3 ? "Kamu luar biasa! Semua benar!" : "Terus berlatih ya!");
+}
+
+// ===== LEVEL 2: Suku Kata Vokal A =====
+function renderLevel2() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>🅰️ Level 2: Suku Kata Vokal A</h2><p>Lihat bagaimana huruf bergabung menjadi suku kata! ✨</p></div>`;
+  html += `<div class="tab-nav"><button class="tab-btn active" data-tab="blend">🎬 Blending</button><button class="tab-btn" data-tab="cards2">🎴 Kartu</button><button class="tab-btn" data-tab="quiz2">🎯 Kuis</button></div>`;
+  html += `<div id="l2Blend"><div class="blend-container" id="blendArea">
+    <div class="blend-letter" id="blendC">M</div>
+    <div class="blend-plus">+</div>
+    <div class="blend-letter" id="blendV">A</div>
+    <div class="blend-plus">=</div>
+    <div class="blend-result" id="blendR">MA</div>
+  </div>
+  <div style="text-align:center;"><button class="btn btn-primary" id="btnBlend">🔊 Gabungkan!</button></div>
+  <div style="text-align:center;margin-top:12px;"><button class="btn btn-warning" id="btnNextBlend">➡️ Suku Kata Berikutnya</button></div></div>`;
+  html += `<div id="l2Cards" class="card-grid" style="display:none;">`;
+  SYLLABLES_A.forEach(s => {
+    html += `<div class="flash-card" data-syllable="${s}"><div class="card-letter" style="font-size:2rem;">${s}</div></div>`;
+  });
+  html += `</div>`;
+  html += `<div id="l2Quiz" class="quiz-container" style="display:none;"></div>`;
+  content.innerHTML = html;
+
+  let blendIdx = 0;
+  const blendConsonants = ['M','B','K','S','T','P','N','R','L','D'];
+
+  function updateBlend() {
+    const bc = $('blendC'); const bv = $('blendV'); const br = $('blendR');
+    if (!bc || !bv || !br) return;
+    const c = blendConsonants[blendIdx % blendConsonants.length];
+    bc.textContent = c;
+    bv.textContent = 'A';
+    br.textContent = c + 'A';
+    br.classList.remove('show');
+  }
+
+  const btnBlend = $('btnBlend');
+  if (btnBlend) btnBlend.addEventListener('click', () => {
+    playPop();
+    const br = $('blendR');
+    if (!br) return;
+    const c = $('blendC') ? $('blendC').textContent : 'M';
+    br.classList.add('show');
+    speakBlending(c, 'A', c + 'a');
+  });
+
+  const btnNextBlend = $('btnNextBlend');
+  if (btnNextBlend) btnNextBlend.addEventListener('click', () => {
+    blendIdx++;
+    updateBlend();
+    playPop();
+  });
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      const bl = $('l2Blend'); const ca = $('l2Cards'); const qz = $('l2Quiz');
+      if (bl) bl.style.display = tab === 'blend' ? 'block' : 'none';
+      if (ca) ca.style.display = tab === 'cards2' ? 'grid' : 'none';
+      if (qz) qz.style.display = tab === 'quiz2' ? 'block' : 'none';
+      if (tab === 'quiz2') startQuiz2();
+      playPop();
+    });
+  });
+
+  content.querySelectorAll('[data-syllable]').forEach(card => {
+    card.addEventListener('click', () => {
+      playPop();
+      speakSyllable(card.dataset.syllable);
+      card.style.animation = 'none';
+      setTimeout(() => {
+        card.style.animation = 'correctPulse 0.5s ease';
+      }, 10);
+    });
+  });
+}
+
+function startQuiz2() {
+  const container = $('l2Quiz');
+  if (!container) return;
+  APP.quizIndex = 0; APP.quizScore = 0; APP.quizTotal = 5;
+  nextQuiz2Question();
+}
+
+function nextQuiz2Question() {
+  const container = $('l2Quiz');
+  if (!container) return;
+  if (APP.quizIndex >= APP.quizTotal) { finishQuiz2(); return; }
+  const target = SYLLABLES_A[Math.floor(Math.random() * SYLLABLES_A.length)];
+  let options = [target];
+  while (options.length < 3) {
+    const r = SYLLABLES_A[Math.floor(Math.random() * SYLLABLES_A.length)];
+    if (!options.includes(r)) options.push(r);
+  }
+  options.sort(() => Math.random() - 0.5);
+
+  let html = `<div class="quiz-question">🔊 Dengarkan dan pilih suku kata yang benar!</div>`;
+  html += `<div class="quiz-options">`;
+  options.forEach(o => {
+    html += `<button class="quiz-option" data-answer="${o}">${o}</button>`;
+  });
+  html += `</div>`;
+  html += `<p style="margin-top:12px;color:var(--text-light);font-weight:700;background:rgba(255,255,255,0.6);padding:6px 16px;border-radius:50px;display:inline-block;">📝 Soal ${APP.quizIndex + 1} dari ${APP.quizTotal}</p>`;
+  container.innerHTML = html;
+
+  speakSyllable(target);
+
+  container.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+      if (btn.dataset.answer === target) {
+        btn.classList.add('correct'); playSuccess(); APP.quizScore++;
+        mascotSay("Benar! Pintar! 🎉");
+      } else {
+        btn.classList.add('wrong'); playTryAgain();
+        const correctBtn = container.querySelector(`[data-answer="${target}"]`);
+        if (correctBtn) correctBtn.classList.add('correct');
+        mascotSay(`Jawabannya ${target}!`);
+      }
+      APP.quizIndex++;
+      setTimeout(() => nextQuiz2Question(), 1500);
+    });
+  });
+}
+
+function finishQuiz2() {
+  const container = $('l2Quiz');
+  if (!container) return;
+  const stars = APP.quizScore >= 5 ? 3 : APP.quizScore >= 3 ? 2 : 1;
+  awardStars(2, stars);
+  container.innerHTML = `<div class="score-display">
+    <div class="score-circle" style="background:${stars===3?'var(--grad-grass)':stars===2?'var(--grad-sky)':'var(--grad-sun)'};">${APP.quizScore}/${APP.quizTotal}</div>
+    <div class="score-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+    <div class="score-message">${stars===3?'🎉 Luar Biasa! 🎉':stars===2?'👏 Bagus Sekali!':'💪 Ayo Coba Lagi!'}</div>
+    <button class="btn btn-primary" onclick="startQuiz2()">🔄 Ulangi</button>
+  </div>`;
+  if (stars >= 2) { showConfetti(); playSparkle(); }
+}
+
+// ===== LEVEL 3: Matriks Suku Kata =====
+function renderLevel3() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>📊 Level 3: Matriks Suku Kata</h2><p>Sentuh sel untuk mendengar lafalnya! 🐸 Mainkan Lompat Katak!</p></div>`;
+  html += `<div class="tab-nav"><button class="tab-btn active" data-tab="matrix">📋 Matriks</button><button class="tab-btn" data-tab="frog">🐸 Lompat Katak</button></div>`;
+  html += `<div id="l3Matrix"><table class="matrix-table"><tr><th>🎯</th>`;
+  MATRIX_VOWELS.forEach(v => { html += `<th>${v}</th>`; });
+  html += `</tr>`;
+  MATRIX_CONSONANTS.forEach(c => {
+    html += `<tr><th>${c}</th>`;
+    MATRIX_VOWELS.forEach(v => {
+      html += `<td data-syl="${c}${v}">${c}${v}</td>`;
+    });
+    html += `</tr>`;
+  });
+  html += `</table></div>`;
+  html += `<div id="l3Frog" style="display:none;text-align:center;">
+    <div style="background:rgba(255,255,255,0.8);padding:16px;border-radius:var(--radius-lg);margin:12px 0;box-shadow:var(--shadow-soft);">
+      <p style="margin:8px 0;font-size:1.1rem;font-weight:700;">🐸 Ketuk suku kata yang benar di matriks!</p>
+      <div id="frogTarget" style="font-size:2.2rem;font-weight:900;background:var(--grad-purple);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;"></div>
+      <div id="frogScore" style="font-size:1.1rem;color:var(--text);font-weight:700;"></div>
+    </div>
+  </div>`;
+  content.innerHTML = html;
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      const mx = $('l3Matrix'); const fr = $('l3Frog');
+      if (mx) mx.style.display = tab === 'matrix' ? 'block' : 'none';
+      if (fr) fr.style.display = tab === 'frog' ? 'block' : 'none';
+      if (tab === 'frog') startFrogGame();
+      playPop();
+    });
+  });
+
+  content.querySelectorAll('.matrix-table td').forEach(td => {
+    td.addEventListener('click', () => {
+      playPop();
+      speakSyllable(td.dataset.syl);
+      td.classList.add('highlight');
+      setTimeout(() => td.classList.remove('highlight'), 600);
+      if (APP.currentScreen === 'level' && $('l3Frog') && $('l3Frog').style.display !== 'none') {
+        checkFrogAnswer(td.dataset.syl);
+      }
+    });
+  });
+}
+
+let frogTargetSyl = '';
+let frogScoreVal = 0;
+let frogTotalVal = 0;
+
+function startFrogGame() {
+  frogScoreVal = 0; frogTotalVal = 0;
+  nextFrogRound();
+}
+
+function nextFrogRound() {
+  const target = $('frogTarget');
+  const scoreEl = $('frogScore');
+  if (!target || !scoreEl) return;
+  if (frogTotalVal >= 5) {
+    const stars = frogScoreVal >= 5 ? 3 : frogScoreVal >= 3 ? 2 : 1;
+    awardStars(3, stars);
+    target.innerHTML = `<div style="font-size:2rem;">🎊 Selesai! ${frogScoreVal}/5</div>`;
+    scoreEl.innerHTML = `${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}`;
+    if (stars >= 2) { showConfetti(); playSparkle(); }
+    mascotSay(stars === 3 ? "Katak senang! Semua benar!" : "Bagus! Terus berlatih!");
+    return;
+  }
+  const c = MATRIX_CONSONANTS[Math.floor(Math.random() * MATRIX_CONSONANTS.length)];
+  const v = MATRIX_VOWELS[Math.floor(Math.random() * MATRIX_VOWELS.length)];
+  frogTargetSyl = c + v;
+  target.textContent = `🔊 "${frogTargetSyl}"`;
+  scoreEl.textContent = `Skor: ${frogScoreVal}/${frogTotalVal} ⭐`;
+  speakSyllable(frogTargetSyl);
+}
+
+function checkFrogAnswer(syl) {
+  if (syl === frogTargetSyl) {
+    frogScoreVal++;
+    playSuccess();
+    mascotSay("Tepat! 🐸");
+  } else {
+    playTryAgain();
+    mascotSay(`Cari ${frogTargetSyl}!`);
+  }
+  frogTotalVal++;
+  setTimeout(() => nextFrogRound(), 1000);
+}
+
+// ===== LEVEL 4: Pola Khusus =====
+function renderLevel4() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>🌟 Level 4: Pola Khusus</h2><p>Belajar pola spesial Bahasa Indonesia! ✨</p></div>`;
+  html += `<div class="tab-nav">
+    <button class="tab-btn active" data-tab="ng">🎵 NG</button>
+    <button class="tab-btn" data-tab="ny">🎶 NY</button>
+    <button class="tab-btn" data-tab="closed">📦 Tertutup</button>
+    <button class="tab-btn" data-tab="cluster">🔗 Klaster</button>
+  </div>`;
+
+  html += `<div id="l4Ng" class="story-card">
+    <h3><span class="ng-highlight">NG</span> - Sengau</h3>
+    <div class="card-grid">`;
+  ['NGA','NGI','NGU','NGE','NGO'].forEach(s => {
+    html += `<div class="flash-card" data-syllable="${s.toLowerCase()}"><div class="card-letter" style="font-size:1.5rem;"><span class="ng-highlight">ng</span><span class="vowel-highlight">${s.slice(2).toLowerCase()}</span></div></div>`;
+  });
+  html += `</div><p style="margin-top:12px;font-weight:700;"><strong>Contoh kata:</strong> <span class="ng-highlight">ng</span>a<span class="vowel-highlight">a</span>nga, <span class="ng-highlight">ng</span>ilu, <span class="ng-highlight">ng</span>eri</p></div>`;
+
+  html += `<div id="l4Ny" class="story-card" style="display:none;">
+    <h3><span class="ng-highlight">NY</span> - Sengau</h3>
+    <div class="card-grid">`;
+  ['NYA','NYI','NYU','NYE','NYO'].forEach(s => {
+    html += `<div class="flash-card" data-syllable="${s.toLowerCase()}"><div class="card-letter" style="font-size:1.5rem;"><span class="ng-highlight">ny</span><span class="vowel-highlight">${s.slice(2).toLowerCase()}</span></div></div>`;
+  });
+  html += `</div><p style="margin-top:12px;font-weight:700;"><strong>Contoh kata:</strong> <span class="ng-highlight">ny</span>ata, <span class="ng-highlight">ny</span>anyi, <span class="ng-highlight">ny</span>amuk</p></div>`;
+
+  html += `<div id="l4Closed" class="story-card" style="display:none;">
+    <h3>📦 Suku Kata Tertutup</h3>
+    <div class="card-grid">`;
+  ['BAN','KAN','RUM','DING','KOP','PAN','GEL','SON'].forEach(s => {
+    html += `<div class="flash-card" data-syllable="${s.toLowerCase()}"><div class="card-letter" style="font-size:1.5rem;">${s}</div></div>`;
+  });
+  html += `</div></div>`;
+
+  html += `<div id="l4Cluster" class="story-card" style="display:none;">
+    <h3><span class="cluster-highlight">🔗 Klaster Konsonan</span></h3>
+    <div class="card-grid">`;
+  ['BRA','KRI','TRA','PRA','SRI','GRU','KLA','PRO'].forEach(s => {
+    html += `<div class="flash-card" data-syllable="${s.toLowerCase()}"><div class="card-letter" style="font-size:1.5rem;"><span class="cluster-highlight">${s}</span></div></div>`;
+  });
+  html += `</div></div>`;
+
+  content.innerHTML = html;
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      ['l4Ng','l4Ny','l4Closed','l4Cluster'].forEach(id => {
+        const el = $(id);
+        if (el) el.style.display = 'none';
+      });
+      const map = { ng: 'l4Ng', ny: 'l4Ny', closed: 'l4Closed', cluster: 'l4Cluster' };
+      const target = $(map[tab]);
+      if (target) target.style.display = 'block';
+      playPop();
+    });
+  });
+
+  content.querySelectorAll('[data-syllable]').forEach(card => {
+    card.addEventListener('click', () => {
+      playPop();
+      speakSyllable(card.dataset.syllable);
+      card.style.animation = 'none';
+      setTimeout(() => {
+        card.style.animation = 'correctPulse 0.5s ease';
+      }, 10);
+    });
+  });
+
+  awardStars(4, 1);
+  mascotSay("Hebat! Kamu sudah sampai pola khusus!");
+}
+
+// ===== LEVEL 5: Kata Sederhana =====
+const WORDS_L5 = [
+  { word: 'MATA', syllables: ['MA','TA'], emoji: '👁️' },
+  { word: 'BOLA', syllables: ['BO','LA'], emoji: '⚽' },
+  { word: 'BUKU', syllables: ['BU','KU'], emoji: '📕' },
+  { word: 'SAPI', syllables: ['SA','PI'], emoji: '🐄' },
+  { word: 'IKAN', syllables: ['I','KAN'], emoji: '🐟' },
+  { word: 'KAKI', syllables: ['KA','KI'], emoji: '🦶' },
+  { word: 'ROTI', syllables: ['RO','TI'], emoji: '🍞' },
+  { word: 'TOPI', syllables: ['TO','PI'], emoji: '🎩' },
+  { word: 'MAMA', syllables: ['MA','MA'], emoji: '👩' },
+  { word: 'PAPA', syllables: ['PA','PA'], emoji: '👨' }
+];
+
+function renderLevel5() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>📝 Level 5: Kata Sederhana</h2><p>Gabungkan suku kata menjadi kata! ✨</p></div>`;
+  html += `<div class="tab-nav"><button class="tab-btn active" data-tab="read">📖 Baca</button><button class="tab-btn" data-tab="match">🎯 Pasangkan</button></div>`;
+  html += `<div id="l5Read"></div>`;
+  html += `<div id="l5Match" style="display:none;"></div>`;
+  content.innerHTML = html;
+
+  let wordIdx = 0;
+  function showWord() {
+    const readEl = $('l5Read');
+    if (!readEl) return;
+    const w = WORDS_L5[wordIdx % WORDS_L5.length];
+    let sylHtml = w.syllables.map((s, i) => `<div class="syllable-block" style="animation-delay:${i*0.1}s">${s}</div>`).join('');
+    readEl.innerHTML = `
+      <div class="word-image">${w.emoji}</div>
+      <div class="word-display"><div class="word-syllables" id="wordSyls">${sylHtml}</div></div>
+      <div style="text-align:center;margin:16px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="btnReadWord">🔊 Baca!</button>
+        <button class="btn btn-warning" id="btnNextWord">➡️ Kata Berikutnya</button>
+      </div>`;
+
+    const btnRead = $('btnReadWord');
+    if (btnRead) btnRead.addEventListener('click', () => {
+      playPop();
+      w.syllables.forEach((s, i) => {
+        setTimeout(() => speakSyllable(s), i * 700);
+      });
+      setTimeout(() => speak(w.word.toLowerCase()), w.syllables.length * 700 + 300);
+      setTimeout(() => {
+        const syls = $('wordSyls');
+        if (syls) {
+          syls.innerHTML = `<div class="syllable-block" style="background:var(--grad-grass);font-size:2.2rem;animation:correctPulse 0.6s ease;">${w.word}</div>`;
+        }
+      }, w.syllables.length * 700 + 200);
+    });
+
+    const btnNext = $('btnNextWord');
+    if (btnNext) btnNext.addEventListener('click', () => {
+      wordIdx++;
+      showWord();
+      playPop();
+    });
+  }
+  showWord();
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      const rd = $('l5Read'); const mt = $('l5Match');
+      if (rd) rd.style.display = tab === 'read' ? 'block' : 'none';
+      if (mt) mt.style.display = tab === 'match' ? 'block' : 'none';
+      if (tab === 'match') startMatchGame();
+      playPop();
+    });
+  });
+}
+
+function startMatchGame() {
+  const container = $('l5Match');
+  if (!container) return;
+  const shuffled = [...WORDS_L5].sort(() => Math.random() - 0.5).slice(0, 4);
+  const emojis = shuffled.map(w => w.emoji).sort(() => Math.random() - 0.5);
+
+  let html = `<div style="background:rgba(255,255,255,0.8);padding:16px;border-radius:var(--radius-lg);box-shadow:var(--shadow-soft);">
+    <p style="text-align:center;margin:8px 0 16px;font-weight:700;font-size:1.1rem;">🎯 Pasangkan kata dengan gambar yang tepat!</p>`;
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">`;
+  html += `<div>`;
+  shuffled.forEach((w, i) => {
+    html += `<button class="btn btn-primary match-word" data-word="${w.word}" style="width:100%;margin-bottom:8px;">${w.word}</button>`;
+  });
+  html += `</div><div>`;
+  emojis.forEach((e, i) => {
+    const word = shuffled.find(w => w.emoji === e);
+    html += `<button class="btn btn-warning match-emoji" data-word="${word.word}" style="width:100%;margin-bottom:8px;font-size:2rem;">${e}</button>`;
+  });
+  html += `</div></div>`;
+  html += `<div id="matchResult" style="text-align:center;margin-top:12px;font-size:1.2rem;font-weight:800;"></div></div>`;
+  container.innerHTML = html;
+
+  let selectedWord = null;
+  let matchCount = 0;
+
+  container.querySelectorAll('.match-word').forEach(btn => {
+    btn.addEventListener('click', () => {
+      playPop();
+      container.querySelectorAll('.match-word').forEach(b => {
+        b.style.background = '';
+        b.classList.remove('btn-success');
+        b.classList.add('btn-primary');
+      });
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-success');
+      selectedWord = btn.dataset.word;
+    });
+  });
+
+  container.querySelectorAll('.match-emoji').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!selectedWord) { mascotSay("Pilih kata dulu!"); return; }
+      if (btn.dataset.word === selectedWord) {
+        playSuccess();
+        btn.style.background = 'var(--grad-grass)';
+        btn.style.pointerEvents = 'none';
+        const wordBtn = container.querySelector(`.match-word[data-word="${selectedWord}"]`);
+        if (wordBtn) { wordBtn.style.pointerEvents = 'none'; wordBtn.style.opacity = '0.7'; }
+        matchCount++;
+        selectedWord = null;
+        if (matchCount >= 4) {
+          const result = $('matchResult');
+          if (result) result.textContent = '🎉 Semua benar! Hebat! 🎉';
+          awardStars(5, 3);
+          showConfetti();
+          playSparkle();
+        }
+      } else {
+        playTryAgain();
+        mascotSay("Coba lagi!");
+        btn.style.animation = 'wrongShake 0.5s ease';
+        setTimeout(() => btn.style.animation = '', 500);
+      }
+    });
+  });
+}
+
+// ===== LEVEL 6: Kata Kompleks =====
+const WORDS_L6 = [
+  { word: 'KELAPA', parts: ['KE','LA','PA'], emoji: '🥥' },
+  { word: 'SEKOLAH', parts: ['SE','KO','LAH'], emoji: '🏫' },
+  { word: 'KERETA', parts: ['KE','RE','TA'], emoji: '🚂' },
+  { word: 'SEPEDA', parts: ['SE','PE','DA'], emoji: '🚲' },
+  { word: 'MAKAN', parts: ['MA','KAN'], emoji: '🍽️' },
+  { word: 'MINUM', parts: ['MI','NUM'], emoji: '🥤' },
+  { word: 'RUMAH', parts: ['RU','MAH'], emoji: '🏠' },
+  { word: 'BUNGA', parts: ['BU','NGA'], emoji: '🌸' }
+];
+
+function renderLevel6() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>📚 Level 6: Kata Kompleks</h2><p>Susun suku kata menjadi kata utuh! 🧩</p></div>`;
+  html += `<div class="tab-nav"><button class="tab-btn active" data-tab="puzzle">🧩 Puzzle</button><button class="tab-btn" data-tab="read6">📖 Baca</button></div>`;
+  html += `<div id="l6Puzzle"></div>`;
+  html += `<div id="l6Read" style="display:none;"></div>`;
+  content.innerHTML = html;
+
+  content.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      const pz = $('l6Puzzle'); const rd = $('l6Read');
+      if (pz) pz.style.display = tab === 'puzzle' ? 'block' : 'none';
+      if (rd) rd.style.display = tab === 'read6' ? 'block' : 'none';
+      if (tab === 'puzzle') startPuzzle();
+      if (tab === 'read6') showReadL6();
+      playPop();
+    });
+  });
+
+  startPuzzle();
+  showReadL6();
+}
+
+let puzzleIdx = 0;
+function startPuzzle() {
+  const container = $('l6Puzzle');
+  if (!container) return;
+  const w = WORDS_L6[puzzleIdx % WORDS_L6.length];
+  const shuffled = [...w.parts].sort(() => Math.random() - 0.5);
+
+  let html = `<div style="background:rgba(255,255,255,0.8);padding:20px;border-radius:var(--radius-lg);box-shadow:var(--shadow-soft);">
+    <div style="text-align:center;font-size:4rem;margin:8px 0;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2));">${w.emoji}</div>
+    <p style="text-align:center;margin:12px 0;font-weight:700;font-size:1.1rem;">Susun suku kata menjadi: <strong style="background:var(--grad-purple);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1.3rem;">${w.word}</strong></p>
+    <div class="puzzle-slots" id="puzzleSlots">`;
+  w.parts.forEach((_, i) => {
+    html += `<div class="puzzle-slot" data-idx="${i}"></div>`;
+  });
+  html += `</div>
+    <div class="puzzle-area" id="puzzlePieces">`;
+  shuffled.forEach((p, i) => {
+    html += `<div class="puzzle-piece" data-part="${p}" data-orig="${i}" style="animation:syllableDrop 0.5s cubic-bezier(0.34,1.56,0.64,1);animation-delay:${i*0.1}s;animation-fill-mode:both;">${p}</div>`;
+  });
+  html += `</div>
+    <div style="text-align:center;margin:14px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-warning" id="btnResetPuzzle">🔄 Acak Ulang</button>
+      <button class="btn btn-purple" id="btnNextPuzzle">➡️ Berikutnya</button>
+    </div>
+    <div id="puzzleResult" style="text-align:center;margin:12px 0;font-weight:800;font-size:1.2rem;"></div>
+  </div>`;
+  container.innerHTML = html;
+
+  let placed = [];
+  container.querySelectorAll('.puzzle-piece').forEach(piece => {
+    piece.addEventListener('click', () => {
+      if (piece.classList.contains('placed')) return;
+      playPop();
+      const slots = container.querySelectorAll('.puzzle-slot');
+      const nextSlot = placed.length;
+      if (nextSlot >= w.parts.length) return;
+      slots[nextSlot].textContent = piece.dataset.part;
+      slots[nextSlot].classList.add('filled');
+      piece.classList.add('placed');
+      placed.push(piece.dataset.part);
+      speakSyllable(piece.dataset.part);
+
+      if (placed.length === w.parts.length) {
+        const isCorrect = placed.every((p, i) => p === w.parts[i]);
+        const result = $('puzzleResult');
+        if (isCorrect) {
+          if (result) result.innerHTML = '🎉 <span style="background:var(--grad-grass);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Benar! Hebat!</span> 🎉';
+          playSuccess();
+          showConfetti();
+          awardStars(6, 3);
+          speak(w.word.toLowerCase());
+        } else {
+          if (result) result.innerHTML = '🤔 <span style="color:var(--orange);">Belum tepat, coba lagi!</span>';
+          playTryAgain();
+        }
+      }
+    });
+  });
+
+  const btnReset = $('btnResetPuzzle');
+  if (btnReset) btnReset.addEventListener('click', () => { startPuzzle(); playPop(); });
+
+  const btnNext = $('btnNextPuzzle');
+  if (btnNext) btnNext.addEventListener('click', () => { puzzleIdx++; startPuzzle(); playPop(); });
+}
+
+function showReadL6() {
+  const container = $('l6Read');
+  if (!container) return;
+  let html = `<div class="card-grid">`;
+  WORDS_L6.forEach(w => {
+    html += `<div class="flash-card" data-word6="${w.word}"><div class="card-emoji">${w.emoji}</div><div class="card-letter" style="font-size:1.3rem;">${w.word}</div></div>`;
+  });
+  html += `</div>`;
+  container.innerHTML = html;
+
+  container.querySelectorAll('[data-word6]').forEach(card => {
+    card.addEventListener('click', () => {
+      playPop();
+      speak(card.dataset.word6.toLowerCase());
+      card.style.animation = 'none';
+      setTimeout(() => {
+        card.style.animation = 'correctPulse 0.5s ease';
+      }, 10);
+    });
+  });
+}
+
+// ===== LEVEL 7: Kalimat & Cerita =====
+const STORIES_L7 = [
+  {
+    title: "Bola Budi",
+    text: "Budi punya bola. Bola Budi berwarna merah. Budi suka bermain bola di halaman.",
+    questions: [
+      { q: "Siapa yang punya bola?", options: ["Budi", "Ibu", "Ani"], answer: "Budi" },
+      { q: "Apa warna bola Budi?", options: ["Biru", "Merah", "Hijau"], answer: "Merah" }
+    ]
+  },
+  {
+    title: "Ibu ke Pasar",
+    text: "Ibu pergi ke pasar. Ibu membeli sayur dan buah. Adik senang makan buah apel.",
+    questions: [
+      { q: "Ibu pergi ke mana?", options: ["Sekolah", "Pasar", "Taman"], answer: "Pasar" },
+      { q: "Adik senang makan apa?", options: ["Nasi", "Buah apel", "Roti"], answer: "Buah apel" }
+    ]
+  },
+  {
+    title: "Kucing Sari",
+    text: "Sari punya kucing. Kucingnya berwarna putih. Setiap hari Sari memberi makan kucingnya.",
+    questions: [
+      { q: "Sari punya hewan apa?", options: ["Anjing", "Kucing", "Burung"], answer: "Kucing" },
+      { q: "Apa warna kucing Sari?", options: ["Hitam", "Coklat", "Putih"], answer: "Putih" }
+    ]
+  }
+];
+
+function renderLevel7() {
+  const content = $('levelContent');
+  if (!content) return;
+  let html = `<div class="level-header"><h2>📖 Level 7: Kalimat & Cerita</h2><p>Baca cerita dan jawab pertanyaan! 🎤</p></div>`;
+  html += `<div id="l7Content"></div>`;
+  content.innerHTML = html;
+  showStory(0);
+}
+
+let storyIdx = 0;
+function showStory(idx) {
+  const container = $('l7Content');
+  if (!container) return;
+  const story = STORIES_L7[idx % STORIES_L7.length];
+  const words = story.text.split(' ');
+
+  let html = `<div class="story-card"><h3>📖 ${story.title}</h3>`;
+  html += `<div class="karaoke-text" id="karaokeText">`;
+  words.forEach((w, i) => {
+    html += `<span class="karaoke-word" data-idx="${i}">${w}</span> `;
+  });
+  html += `</div>`;
+  html += `<div style="text-align:center;margin:14px 0;">
+    <button class="btn btn-pink" id="btnKaraoke">🎤 Baca Bersama</button>
+  </div></div>`;
+  html += `<div id="l7Questions" style="display:none;"></div>`;
+  html += `<div style="text-align:center;margin:14px 0;">
+    <button class="btn btn-purple" id="btnNextStory">➡️ Cerita Berikutnya</button>
+  </div>`;
+  container.innerHTML = html;
+
+  const btnKaraoke = $('btnKaraoke');
+  if (btnKaraoke) btnKaraoke.addEventListener('click', () => {
+    playPop();
+    runKaraoke(words);
+  });
+
+  const btnNext = $('btnNextStory');
+  if (btnNext) btnNext.addEventListener('click', () => {
+    storyIdx++;
+    showStory(storyIdx);
+    playPop();
+  });
+}
+
+function runKaraoke(words) {
+  const wordEls = document.querySelectorAll('.karaoke-word');
+  if (!wordEls.length) return;
+
+  const fullText = words.join(' ');
+  speak(fullText, { rate: 0.75 });
+
+  const wordDuration = (fullText.length * 80) / words.length;
+  wordEls.forEach((el, i) => {
+    setTimeout(() => {
+      wordEls.forEach(e => { e.classList.remove('active'); e.classList.add('done'); });
+      el.classList.add('active');
+      el.classList.remove('done');
+      playPop();
+    }, i * Math.max(wordDuration, 400));
+  });
+
+  setTimeout(() => {
+    wordEls.forEach(e => { e.classList.remove('active'); e.classList.add('done'); });
+    showStoryQuestions();
+  }, words.length * Math.max(wordDuration, 400) + 500);
+}
+
+function showStoryQuestions() {
+  const container = $('l7Questions');
+  if (!container) return;
+  const story = STORIES_L7[storyIdx % STORIES_L7.length];
+  container.style.display = 'block';
+
+  let html = `<div class="story-card"><h3>❓ Pertanyaan</h3>`;
+  story.questions.forEach((q, qi) => {
+    html += `<div style="margin:14px 0;padding:14px;background:rgba(255,255,255,0.6);border-radius:var(--radius);"><p style="font-weight:800;margin-bottom:10px;">${q.q}</p><div class="quiz-options">`;
+    q.options.forEach(opt => {
+      html += `<button class="quiz-option l7-answer" data-story="${storyIdx}" data-qi="${qi}" data-answer="${opt}" style="font-size:1.2rem;">${opt}</button>`;
+    });
+    html += `</div></div>`;
+  });
+  html += `<div id="l7Result" style="text-align:center;margin:14px 0;font-weight:800;font-size:1.2rem;"></div></div>`;
+  container.innerHTML = html;
+
+  let correctCount = 0;
+  const totalQ = story.questions.length;
+  const answered = new Set();
+
+  container.querySelectorAll('.l7-answer').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const qi = parseInt(btn.dataset.qi);
+      if (answered.has(qi)) return;
+      answered.add(qi);
+
+      const q = story.questions[qi];
+      const siblings = container.querySelectorAll(`.l7-answer[data-qi="${qi}"]`);
+      siblings.forEach(s => s.style.pointerEvents = 'none');
+
+      if (btn.dataset.answer === q.answer) {
+        btn.classList.add('correct');
+        playSuccess();
+        correctCount++;
+      } else {
+        btn.classList.add('wrong');
+        playTryAgain();
+        siblings.forEach(s => { if (s.dataset.answer === q.answer) s.classList.add('correct'); });
+      }
+
+      if (answered.size === totalQ) {
+        const result = $('l7Result');
+        const stars = correctCount === totalQ ? 3 : correctCount >= 1 ? 2 : 1;
+        if (result) result.innerHTML = `${correctCount}/${totalQ} benar! ${'⭐'.repeat(stars)}`;
+        awardStars(7, stars);
+        if (stars >= 2) { showConfetti(); playSparkle(); }
+        mascotSay(correctCount === totalQ ? "Sempurna! Kamu juara membaca!" : "Bagus! Terus berlatih!");
+      }
+    });
+  });
+}
+
+// ===== WRITING STUDIO =====
+const WRITING_DATA = {
+  vowel: {
+    items: ['A','I','U','E','O'],
+    guides: {
+      'A': '1. Tarik garis miring dari kiri atas ke kanan bawah.\n2. Tarik garis miring dari kanan atas ke kiri bawah.\n3. Tarik garis horizontal di tengah.',
+      'I': '1. Tarik garis vertikal dari atas ke bawah.\n2. Tambahkan titik di atas.',
+      'U': '1. Tarik garis vertikal pendek di kiri.\n2. Buat lengkung di bawah.\n3. Tarik garis vertikal pendek di kanan.',
+      'E': '1. Tarik garis vertikal dari atas ke bawah.\n2. Tarik 3 garis horizontal (atas, tengah, bawah).',
+      'O': '1. Buat lingkaran penuh dari atas.'
+    }
+  },
+  consonant: {
+    items: ['B','C','D','K','M','N','P','S','T'],
+    guides: {
+      'B': '1. Tarik tiang lurus dari atas ke bawah.\n2. Buat lengkung atas dari tengah.\n3. Buat lengkung bawah dari tengah.',
+      'C': '1. Buat lengkung terbuka dari kanan atas ke kanan bawah.',
+      'D': '1. Tarik garis vertikal dari atas ke bawah.\n2. Buat lengkung besar dari atas ke bawah di kanan.',
+      'K': '1. Tarik garis vertikal dari atas ke bawah.\n2. Dari tengah, tarik garis miring ke kanan atas.\n3. Dari tengah, tarik garis miring ke kanan bawah.',
+      'M': '1. Tarik garis vertikal dari atas ke bawah (kiri).\n2. Dari atas, tarik miring ke tengah bawah.\n3. Dari tengah bawah, tarik miring ke kanan atas.\n4. Tarik vertikal ke bawah (kanan).',
+      'N': '1. Tarik vertikal dari atas ke bawah (kiri).\n2. Dari atas kiri, tarik miring ke bawah kanan.\n3. Tarik vertikal dari atas ke bawah (kanan).',
+      'P': '1. Tarik vertikal dari atas ke bawah.\n2. Buat lengkung dari atas ke tengah di kanan.',
+      'S': '1. Buat lengkung atas ke kiri.\n2. Lanjutkan lengkung bawah ke kanan.',
+      'T': '1. Tarik horizontal di atas.\n2. Tarik vertikal dari tengah atas ke bawah.'
+    }
+  },
+  syllable: {
+    items: ['BA','MA','KU','SA','TI'],
+    guides: {
+      'BA': 'Tulis B lalu A bersebelahan. B: tiang + 2 lengkung. A: dua garis miring + horizontal.',
+      'MA': 'Tulis M lalu A. M: zigzag. A: dua miring + horizontal.',
+      'KU': 'Tulis K lalu U. K: vertikal + 2 miring. U: dua vertikal pendek + lengkung bawah.',
+      'SA': 'Tulis S lalu A. S: dua lengkung. A: dua miring + horizontal.',
+      'TI': 'Tulis T lalu I. T: horizontal + vertikal. I: vertikal + titik.'
+    }
+  },
+  word: {
+    items: ['IBU','ADA','BOLA','MAMA','SAPI'],
+    guides: {
+      'IBU': 'Tulis I (vertikal + titik), B (tiang + 2 lengkung), U (dua vertikal + lengkung).',
+      'ADA': 'Tulis A, D, A berurutan.',
+      'BOLA': 'Tulis B, O, L, A berurutan.',
+      'MAMA': 'Tulis M, A, M, A berurutan.',
+      'SAPI': 'Tulis S, A, P, I berurutan.'
+    }
+  }
+};
+
+function initWritingStudio() {
+  APP.writingCategory = 'vowel';
+  APP.writingIndex = 0;
+  updateWritingTarget();
+  initCanvas();
+}
+
+function updateWritingTarget() {
+  const data = WRITING_DATA[APP.writingCategory];
+  if (!data) return;
+  const item = data.items[APP.writingIndex % data.items.length];
+  const target = $('writingTarget');
+  if (target) target.textContent = item;
+
+  const guide = data.guides[item] || 'Tulis huruf dengan hati-hati mengikuti garis panduan.';
+  const instr = $('strokeInstructions');
+  if (instr) instr.textContent = guide;
+
+  drawGuide(item);
+  hideWritingScore();
+}
+
+function drawGuide(letter) {
+  const guideCanvas = $('guideCanvas');
+  const writeCanvas = $('writingCanvas');
+  if (!guideCanvas || !writeCanvas) return;
+
+  guideCanvas.width = writeCanvas.offsetWidth;
+  guideCanvas.height = writeCanvas.offsetHeight;
+  const ctx = guideCanvas.getContext('2d');
+  ctx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
+
+  const h = guideCanvas.height;
+  const lineY1 = h * 0.2;
+  const lineY2 = h * 0.5;
+  const lineY3 = h * 0.8;
+
+  ctx.strokeStyle = '#FFB74D';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, lineY1); ctx.lineTo(guideCanvas.width, lineY1); ctx.stroke();
+  ctx.setLineDash([8, 6]);
+  ctx.strokeStyle = '#4FC3F7';
+  ctx.beginPath(); ctx.moveTo(0, lineY2); ctx.lineTo(guideCanvas.width, lineY2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#66BB6A';
+  ctx.beginPath(); ctx.moveTo(0, lineY3); ctx.lineTo(guideCanvas.width, lineY3); ctx.stroke();
+
+  ctx.fillStyle = 'rgba(171,71,188,0.12)';
+  ctx.font = `bold ${h * 0.6}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(letter, guideCanvas.width / 2, h / 2);
+}
+
+function initCanvas() {
+  const canvas = $('writingCanvas');
+  if (!canvas) return;
+
+  function resizeCanvas() {
+    const container = canvas.parentElement;
+    if (!container) return;
+    canvas.width = container.offsetWidth;
+    canvas.height = 300;
+    const item = WRITING_DATA[APP.writingCategory].items[APP.writingIndex % WRITING_DATA[APP.writingCategory].items.length];
+    drawGuide(item);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  let lastX = 0, lastY = 0;
+  const ctx = canvas.getContext('2d');
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) * (canvas.width / rect.width),
+      y: (e.clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointerdown', (e) => {
+    APP.isDrawing = true;
+    const pos = getPos(e);
+    lastX = pos.x; lastY = pos.y;
+    APP.drawPoints.push({ x: pos.x, y: pos.y });
+    canvas.setPointerCapture(e.pointerId);
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!APP.isDrawing) return;
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = APP.isEraser ? '#FFFDE7' : APP.brushColor;
+    ctx.lineWidth = APP.isEraser ? 24 : 8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    if (!APP.isEraser) {
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = APP.brushColor;
+    } else {
+      ctx.shadowBlur = 0;
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    lastX = pos.x; lastY = pos.y;
+    APP.drawPoints.push({ x: pos.x, y: pos.y });
+  });
+
+  canvas.addEventListener('pointerup', () => { APP.isDrawing = false; });
+  canvas.addEventListener('pointerleave', () => { APP.isDrawing = false; });
+}
+
+function clearCanvas() {
+  const canvas = $('writingCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  APP.drawPoints = [];
+  hideWritingScore();
+  playPop();
+}
+
+function evaluateWriting() {
+  const canvas = $('writingCanvas');
+  if (!canvas) return;
+  if (APP.drawPoints.length < 10) {
+    mascotSay("Ayo tulis dulu! 🖊️");
+    return;
+  }
+
+  const data = WRITING_DATA[APP.writingCategory];
+  const item = data.items[APP.writingIndex % data.items.length];
+
+  const refCanvas = document.createElement('canvas');
+  refCanvas.width = canvas.width;
+  refCanvas.height = canvas.height;
+  const refCtx = refCanvas.getContext('2d');
+
+  const h = refCanvas.height;
+  refCtx.fillStyle = '#000';
+  refCtx.font = `bold ${h * 0.6}px sans-serif`;
+  refCtx.textAlign = 'center';
+  refCtx.textBaseline = 'middle';
+
+  if (item.length === 1) {
+    refCtx.fillText(item, refCanvas.width / 2, h / 2);
+  } else {
+    const charWidth = refCanvas.width / (item.length + 1);
+    for (let ci = 0; ci < item.length; ci++) {
+      refCtx.fillText(item[ci], charWidth * (ci + 1), h / 2);
+    }
+  }
+
+  const refData = refCtx.getImageData(0, 0, refCanvas.width, refCanvas.height);
+  const userCtx = canvas.getContext('2d');
+  const userData = userCtx.getImageData(0, 0, canvas.width, canvas.height);
+
+  let refPixels = 0;
+  let coveredPixels = 0;
+  let totalUserPixels = 0;
+  let userOnTarget = 0;
+
+  const step = 3;
+  for (let i = 0; i < refData.data.length; i += 4 * step) {
+    const isRef = refData.data[i + 3] > 128;
+    const isUser = userData.data[i] < 240 || userData.data[i+1] < 240 || userData.data[i+2] < 240;
+
+    if (isRef) {
+      refPixels++;
+      if (isUser) coveredPixels++;
+    }
+    if (isUser) {
+      totalUserPixels++;
+      if (isRef) userOnTarget++;
+    }
+  }
+
+  const coverage = refPixels > 0 ? (coveredPixels / refPixels) * 100 : 0;
+  const precision = totalUserPixels > 0 ? (userOnTarget / totalUserPixels) * 100 : 0;
+  const score = Math.round((coverage * 0.6 + precision * 0.4));
+  const finalScore = Math.min(100, Math.max(0, score));
+
+  showWritingScore(finalScore, item);
+}
+
+function showWritingScore(score, letter) {
+  const container = $('writingScore');
+  if (!container) return;
+  container.style.display = 'block';
+
+  let stars, message, grad;
+  if (score >= 85) {
+    stars = 3; message = "🎉 Luar Biasa! Tulisanmu Sangat Rapi!"; grad = 'var(--grad-grass)';
+    playSuccess(); showConfetti(); playSparkle();
+  } else if (score >= 65) {
+    stars = 2; message = "👏 Bagus Sekali! Terus Berlatih ya!"; grad = 'var(--grad-sky)';
+    playSuccess();
+  } else {
+    stars = 1; message = "💪 Ayo Coba Sekali Lagi, Pasti Bisa!"; grad = 'var(--grad-sun)';
+    playTryAgain();
+  }
+
+  APP.writingHistory.push({ letter, score, stars, date: new Date().toLocaleDateString('id-ID') });
+  if (APP.writingHistory.length > 50) APP.writingHistory = APP.writingHistory.slice(-50);
+  saveProgress();
+
+  if (stars === 3) {
+    APP.badges['jago_nulis'] = true;
+    saveProgress();
+  }
+
+  container.innerHTML = `<div class="score-display">
+    <div class="score-circle" style="background:${grad};">${score}</div>
+    <div class="score-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+    <div class="score-message">${message}</div>
+    <div class="progress-bar" style="max-width:300px;margin:14px auto;">
+      <div class="progress-fill" style="width:${score}%;"></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;">
+      <button class="btn btn-warning" onclick="clearCanvas();hideWritingScore();">🔄 Ulangi</button>
+      <button class="btn btn-purple" onclick="nextWritingItem();">➡️ Berikutnya</button>
+    </div>
+  </div>`;
+
+  mascotSay(stars === 3 ? "Tulisanmu indah sekali!" : stars === 2 ? "Bagus! Terus berlatih!" : "Semangat! Pasti bisa!");
+  speak(message.replace(/[🎉👏💪]/g, ''));
+}
+
+function hideWritingScore() {
+  const container = $('writingScore');
+  if (container) container.style.display = 'none';
+}
+
+function nextWritingItem() {
+  APP.writingIndex++;
+  updateWritingTarget();
+  clearCanvas();
+  playPop();
+}
+
+// ===== STARS & BADGES =====
+function awardStars(level, stars) {
+  if (stars > APP.levelStars[level - 1]) {
+    const diff = stars - APP.levelStars[level - 1];
+    APP.totalStars += diff;
+    APP.levelStars[level - 1] = stars;
+  }
+  if (APP.levelStars[0] > 0) APP.badges['kenal_huruf'] = true;
+  if (APP.levelStars[1] > 0 && APP.levelStars[2] > 0) APP.badges['ahli_suku_kata'] = true;
+  if (APP.levelStars[3] > 0) APP.badges['penjelajah_pola'] = true;
+  if (APP.levelStars[4] > 0) APP.badges['pembaca_pemula'] = true;
+  if (APP.levelStars[5] > 0 && APP.levelStars[6] > 0) APP.badges['juara_membaca'] = true;
+
+  saveProgress();
+  updateUI();
+}
+
+function isLevelUnlocked(level) {
+  if (level === 1) return true;
+  return APP.levelStars[level - 2] > 0;
+}
+
+// ===== UI UPDATE =====
+function updateUI() {
+  const totalStarsEl = $('totalStars');
+  if (totalStarsEl) totalStarsEl.textContent = APP.totalStars;
+
+  renderLevelGrid();
+  renderBadgeGrid();
+  renderWritingHistory();
+}
+
+function renderLevelGrid() {
+  const grid = $('levelGrid');
+  if (!grid) return;
+  let html = '';
+  LEVELS.forEach(l => {
+    const unlocked = isLevelUnlocked(l.num);
+    const stars = APP.levelStars[l.num - 1];
+    html += `<div class="level-card ${unlocked ? '' : 'locked'}" data-level="${l.num}" style="--card-accent:${l.grad};">
+      ${!unlocked ? '<span class="lock-icon">🔒</span>' : ''}
+      <div class="level-num">${l.icon}</div>
+      <div class="level-title">Level ${l.num}<br>${l.title}</div>
+      <div class="level-stars">${stars > 0 ? '⭐'.repeat(stars) + '☆'.repeat(3-stars) : '☆☆☆'}</div>
+    </div>`;
+  });
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.level-card:not(.locked)').forEach(card => {
+    card.addEventListener('click', () => {
+      playPop();
+      const level = parseInt(card.dataset.level);
+      openLevel(level);
+    });
+  });
+}
+
+function openLevel(level) {
+  APP.currentLevel = level;
+  $('levelTitle').textContent = `Level ${level}: ${LEVELS[level-1].title}`;
+  const ls = $('levelStars');
+  if (ls) ls.textContent = APP.levelStars[level - 1];
+  showScreen('level');
+
+  switch(level) {
+    case 1: renderLevel1(); break;
+    case 2: renderLevel2(); break;
+    case 3: renderLevel3(); break;
+    case 4: renderLevel4(); break;
+    case 5: renderLevel5(); break;
+    case 6: renderLevel6(); break;
+    case 7: renderLevel7(); break;
+  }
+
+  mascotSay(getLevelGreeting(level));
+}
+
+function getLevelGreeting(level) {
+  const greetings = [
+    "Ayo mengenal huruf! Sentuh setiap huruf ya! 🔤",
+    "Sekarang kita gabungkan huruf menjadi suku kata! 🎬",
+    "Mainkan matriks suku kata! Lompat Katak seru! 🐸",
+    "Ada pola spesial dalam Bahasa Indonesia! 🌟",
+    "Saatnya membaca kata pertama kamu! 📝",
+    "Kata yang lebih panjang, kamu pasti bisa! 📚",
+    "Baca cerita dan jawab pertanyaan! 📖"
+  ];
+  return greetings[level - 1] || "Selamat belajar!";
+}
+
+function renderBadgeGrid() {
+  const grid = $('badgeGrid');
+  if (!grid) return;
+  const badges = [
+    { id: 'kenal_huruf', icon: '🏅', name: 'Kenal Huruf' },
+    { id: 'ahli_suku_kata', icon: '🏅', name: 'Ahli Suku Kata' },
+    { id: 'penjelajah_pola', icon: '🏅', name: 'Penjelajah Pola' },
+    { id: 'pembaca_pemula', icon: '🏅', name: 'Pembaca Pemula' },
+    { id: 'juara_membaca', icon: '🏅', name: 'Juara Membaca' },
+    { id: 'jago_nulis', icon: '✍️', name: 'Jago Nulis' }
+  ];
+  let html = '';
+  badges.forEach(b => {
+    const earned = APP.badges[b.id];
+    html += `<div class="badge-item ${earned ? 'earned' : 'locked'}">
+      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-name">${b.name}</div>
+    </div>`;
+  });
+  grid.innerHTML = html;
+}
+
+function renderWritingHistory() {
+  const container = $('writingHistory');
+  if (!container) return;
+  if (APP.writingHistory.length === 0) {
+    container.innerHTML = '<p style="padding:12px;background:rgba(255,255,255,0.6);border-radius:12px;">Belum ada riwayat menulis. Ayo mulai menulis!</p>';
+    return;
+  }
+  let html = '<div style="max-height:200px;overflow-y:auto;">';
+  APP.writingHistory.slice(-10).reverse().forEach(h => {
+    html += `<div style="padding:8px 12px;background:rgba(255,255,255,0.6);border-radius:10px;margin-bottom:6px;font-weight:600;">
+      <span style="font-size:1.2rem;font-weight:900;color:var(--purple);">${h.letter}</span>: 
+      Skor <strong>${h.score}</strong> ${'⭐'.repeat(h.stars)} 
+      <span style="color:var(--text-light);font-size:0.8rem;">(${h.date})</span>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ===== EVENT LISTENERS =====
+document.addEventListener('DOMContentLoaded', () => {
+  loadProgress();
+  updateUI();
+  initWritingStudio();
+
+  const btnBackHome = $('btnBackHome');
+  if (btnBackHome) btnBackHome.addEventListener('click', () => { playPop(); goHome(); });
+
+  const btnBackFromWriting = $('btnBackFromWriting');
+  if (btnBackFromWriting) btnBackFromWriting.addEventListener('click', () => { playPop(); goHome(); });
+
+  const btnWritingStudio = $('btnWritingStudio');
+  if (btnWritingStudio) btnWritingStudio.addEventListener('click', () => {
+    playPop();
+    showScreen('writing');
+    initWritingStudio();
+    mascotSay("Ayo latihan menulis! Pilih huruf dan mulai menulis! ✍️");
+  });
+
+  const btnSettings = $('btnSettings');
+  if (btnSettings) btnSettings.addEventListener('click', () => {
+    playPop();
+    const modal = $('settingsModal');
+    if (modal) modal.classList.add('active');
+    updateUI();
+  });
+
+  const btnBadges = $('btnBadges');
+  if (btnBadges) btnBadges.addEventListener('click', () => {
+    playPop();
+    const modal = $('settingsModal');
+    if (modal) modal.classList.add('active');
+    updateUI();
+  });
+
+  const btnCloseSettings = $('btnCloseSettings');
+  if (btnCloseSettings) btnCloseSettings.addEventListener('click', () => {
+    playPop();
+    const modal = $('settingsModal');
+    if (modal) modal.classList.remove('active');
+  });
+
+  const btnTestVoice = $('btnTestVoice');
+  if (btnTestVoice) btnTestVoice.addEventListener('click', () => {
+    speak("Halo! Saya bisa berbicara bahasa Indonesia. Selamat belajar membaca!");
+    mascotSay("Dengar? Suaranya dalam Bahasa Indonesia! 🔊");
+  });
+
+  const btnResetProgress = $('btnResetProgress');
+  if (btnResetProgress) btnResetProgress.addEventListener('click', () => {
+    if (confirm("Yakin ingin menghapus semua progres?")) {
+      resetProgress();
+      mascotSay("Progres sudah direset!");
+    }
+  });
+
+  const settingsModal = $('settingsModal');
+  if (settingsModal) settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) settingsModal.classList.remove('active');
+  });
+
+  const btnClearCanvas = $('btnClearCanvas');
+  if (btnClearCanvas) btnClearCanvas.addEventListener('click', clearCanvas);
+
+  const btnCheckWriting = $('btnCheckWriting');
+  if (btnCheckWriting) btnCheckWriting.addEventListener('click', evaluateWriting);
+
+  const btnVoiceGuide = $('btnVoiceGuide');
+  if (btnVoiceGuide) btnVoiceGuide.addEventListener('click', () => {
+    const data = WRITING_DATA[APP.writingCategory];
+    const item = data.items[APP.writingIndex % data.items.length];
+    const guide = data.guides[item] || '';
+    speak(guide.replace(/\d\.\s/g, '. Langkah: ').replace(/\n/g, '. '));
+    playPop();
+  });
+
+  const btnNextLetter = $('btnNextLetter');
+  if (btnNextLetter) btnNextLetter.addEventListener('click', nextWritingItem);
+
+  document.querySelectorAll('#writingCategory .cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#writingCategory .cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      APP.writingCategory = btn.dataset.cat;
+      APP.writingIndex = 0;
+      updateWritingTarget();
+      clearCanvas();
+      playPop();
+    });
+  });
+
+  document.querySelectorAll('.brush-color').forEach(brush => {
+    brush.addEventListener('click', () => {
+      document.querySelectorAll('.brush-color').forEach(b => b.classList.remove('active'));
+      brush.classList.add('active');
+      if (brush.dataset.color === 'eraser') {
+        APP.isEraser = true;
+      } else {
+        APP.isEraser = false;
+        APP.brushColor = brush.dataset.color;
+      }
+      playPop();
+    });
+  });
+
+  const mascotSvg = $('mascotSvg');
+  if (mascotSvg) mascotSvg.addEventListener('click', () => {
+    playPop();
+    const msgs = [
+      "Hai! Aku Kiki si Kancil! 🦌",
+      "Kamu hebat! Terus belajar ya! 🌟",
+      "Ayo baca lagi! Pasti bisa! 📖",
+      "Jangan lupa latihan menulis! ✍️",
+      "Setiap hari belajar, semakin pintar! 🎓"
+    ];
+    mascotSay(msgs[Math.floor(Math.random() * msgs.length)]);
+  });
+
+  setTimeout(() => {
+    mascotSay("Halo! Aku Kiki! Ayo belajar membaca! 🦌📖✨", 5000);
+  }, 1000);
+});
+</script>
+</body>
+</html>
